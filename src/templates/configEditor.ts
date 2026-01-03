@@ -65,6 +65,87 @@ export function createEntityInfo(
   `;
 }
 
+export function createDebugToggle(
+  debug: boolean,
+  onDebugChanged: (event_: CustomEvent) => void,
+  translations: TranslationData,
+): TemplateResult {
+  return html`
+    <div class="option">
+      <div class="row">
+        <div class="col">
+          <ha-switch
+            .checked=${debug}
+            @change=${onDebugChanged}
+          ></ha-switch>
+          <label>
+            ${TranslationManager.localize(
+              translations,
+              'config.debug_mode',
+              undefined,
+              'Debug Mode',
+            )}
+          </label>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+export function createHeaderToggle(
+  showHeader: boolean,
+  onHeaderChanged: (event_: CustomEvent) => void,
+  translations: TranslationData,
+): TemplateResult {
+  return html`
+    <div class="option">
+      <div class="row">
+        <div class="col">
+          <ha-switch
+            .checked=${showHeader}
+            @change=${onHeaderChanged}
+          ></ha-switch>
+          <label>
+            ${TranslationManager.localize(
+              translations,
+              'config.show_header',
+              undefined,
+              'Show Title and Subtitle',
+            )}
+          </label>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+export function createAddButtonToggle(
+  showAddButton: boolean,
+  onAddButtonChanged: (event_: CustomEvent) => void,
+  translations: TranslationData,
+): TemplateResult {
+  return html`
+    <div class="option">
+      <div class="row">
+        <div class="col">
+          <ha-switch
+            .checked=${showAddButton}
+            @change=${onAddButtonChanged}
+          ></ha-switch>
+          <label>
+            ${TranslationManager.localize(
+              translations,
+              'config.show_add_button',
+              undefined,
+              'Show Add Item Button',
+            )}
+          </label>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 export function createNoEntityMessage(translations: TranslationData): TemplateResult {
   return html`
     <div class="no-entity">

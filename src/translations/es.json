@@ -31,6 +31,7 @@
   },
   "items": {
     "auto_add_info": "Auto-agregar en ≤ {quantity} → {list}",
+    "last_item": "Último",
     "no_items": "No hay artículos en el inventario"
   },
   "header": {
@@ -108,7 +109,12 @@
     "inventory_entity_required": "Entidad de Inventario (Requerida)",
     "items_count": "Artículos",
     "select_entity_message": "Por favor selecciona una entidad de inventario arriba",
-    "selected_inventory": "Inventario Seleccionado:"
+    "selected_inventory": "Inventario Seleccionado:",
+    "show_header": "Mostrar título y subtítulo",
+    "show_add_button": "Mostrar botón de añadir"
+  },
+  "categories": {
+    "title": "Categorías"
   },
   "actions": {
     "confirm_remove": "¿Eliminar {name} del inventario?"

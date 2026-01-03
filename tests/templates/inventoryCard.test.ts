@@ -38,8 +38,8 @@ vi.mock('../../src/templates/modalTemplates', () => ({
 
 vi.mock('../../src/templates/itemList', () => ({
   createItemsList: vi.fn(
-    (items, sortMethod, todoLists, _translations) =>
-      `<mock-items-list items="${items.length}" sort="${sortMethod}" todos="${todoLists.length}" />`,
+    (items, sortMethod, todoLists, _translations, showAutoAddInfo) =>
+      `<mock-items-list items="${items.length}" sort="${sortMethod}" todos="${todoLists.length}" showAutoAdd="${showAutoAddInfo}" />`,
   ),
 }));
 
@@ -66,9 +66,18 @@ describe('generateCardHTML', () => {
   let mockCategories: string[];
   let mockLocations: string[];
   let mockTranslations: TranslationData;
+  let mockConfig: any;
 
   beforeEach(() => {
     vi.clearAllMocks();
+
+    mockConfig = {
+      type: 'custom:simple-inventory-card',
+      entity: 'sensor.kitchen_inventory',
+      show_search: true,
+      show_sort: true,
+      show_auto_add_info: true,
+    };
 
     mockItems = [
       {
@@ -149,6 +158,7 @@ describe('generateCardHTML', () => {
         mockItems,
         'Kitchen items description',
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('<style>mock-styles-content</style>');
@@ -171,6 +181,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       // Check for main sections
@@ -195,6 +206,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain(`id="${ELEMENTS.OPEN_ADD_MODAL}"`);
@@ -216,6 +228,7 @@ describe('generateCardHTML', () => {
         [],
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('class="empty-state"');
@@ -235,6 +248,7 @@ describe('generateCardHTML', () => {
         [],
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('<div class="empty-state">');
@@ -254,6 +268,7 @@ describe('generateCardHTML', () => {
         [],
         'Description for empty inventory',
         mockTranslations,
+        mockConfig,
       );
 
       // Should still have header, controls, modals, etc.
@@ -278,6 +293,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('name="Pantry & Storage"');
@@ -295,6 +311,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('method="quantity_desc"');
@@ -313,6 +330,7 @@ describe('generateCardHTML', () => {
         mockItems,
         'Test description',
         mockTranslations,
+        mockConfig,
       );
 
       expect(withDescription).toContain('description="Test description"');
@@ -328,6 +346,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(withoutDescription).toContain('description=""');
@@ -352,6 +371,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('categories="5"');
@@ -372,6 +392,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       // Check that ha-card wraps everything
@@ -398,6 +419,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result.trim()).toMatch(/^\s*<style>mock-styles-content<\/style>/);
@@ -415,6 +437,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('class="controls-row"');
@@ -438,6 +461,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('<mock-items-list items="2"');
@@ -456,6 +480,7 @@ describe('generateCardHTML', () => {
         [],
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).not.toContain('<mock-items-list');
@@ -475,6 +500,7 @@ describe('generateCardHTML', () => {
         singleItem,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('<mock-items-list items="1"');
@@ -495,6 +521,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('name=""');
@@ -512,6 +539,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('name="Kitchen & Pantry "Main""');
@@ -529,6 +557,7 @@ describe('generateCardHTML', () => {
         [],
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('categories="0"');
@@ -557,6 +586,7 @@ describe('generateCardHTML', () => {
         mockItems,
         undefined,
         mockTranslations,
+        mockConfig,
       );
 
       expect(result).toContain('searchText="apple"');
@@ -583,6 +613,7 @@ describe('generateCardHTML', () => {
         mockItems,
         'Test description',
         mockTranslations,
+        mockConfig,
       );
 
       expect(inventoryHeaderModule.createInventoryHeader).toHaveBeenCalledWith(
@@ -610,6 +641,7 @@ describe('generateCardHTML', () => {
         'category',
         mockTodoLists,
         mockTranslations,
+        true,
       );
       expect(modalTemplatesModule.createAddModal).toHaveBeenCalledWith(
         mockTodoLists,

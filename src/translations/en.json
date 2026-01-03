@@ -31,6 +31,7 @@
   },
   "items": {
     "auto_add_info": "Auto-add at ≤ {quantity} → {list}",
+    "last_item": "Last",
     "no_items": "No items in inventory"
   },
   "header": {
@@ -108,7 +109,12 @@
     "inventory_entity_required": "Inventory Entity (Required)",
     "items_count": "Items",
     "select_entity_message": "Please select an inventory entity above",
-    "selected_inventory": "Selected Inventory:"
+    "selected_inventory": "Selected Inventory:",
+    "show_header": "Show Title and Subtitle",
+    "show_add_button": "Show Add Item Button"
+  },
+  "categories": {
+    "title": "Categories"
   },
   "actions": {
     "confirm_remove": "Remove {name} from inventory?"

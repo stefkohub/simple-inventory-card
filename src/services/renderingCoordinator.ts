@@ -70,6 +70,7 @@ export class RenderingCoordinator {
         sortMethod,
         todoLists,
         translations,
+        config,
       );
 
       eventHandler.setupEventListeners();

@@ -5,6 +5,9 @@ import {
   createEntitySelector,
   createEntityInfo,
   createNoEntityMessage,
+  createDebugToggle,
+  createHeaderToggle,
+  createAddButtonToggle,
 } from '../templates/configEditor';
 import { configEditorStyles } from '../styles/configEditor';
 import { TranslationData } from '@/types/translatableComponent';
@@ -63,6 +66,18 @@ class ConfigEditor extends LitElement {
     return this._config?.entity || '';
   }
 
+  get _debug(): boolean {
+    return this._config?.debug || false;
+  }
+
+  get _showHeader(): boolean {
+    return this._config?.show_header ?? true;
+  }
+
+  get _showAddButton(): boolean {
+    return this._config?.show_add_button ?? false;
+  }
+
   render(): TemplateResult {
     if (!this.hass || !this._config) {
       return html`<div>
@@ -101,6 +116,21 @@ class ConfigEditor extends LitElement {
           this._valueChanged.bind(this),
           this._translations,
         )}
+        ${createDebugToggle(
+          this._debug,
+          this._debugChanged.bind(this),
+          this._translations,
+        )}
+        ${createHeaderToggle(
+          this._showHeader,
+          this._headerChanged.bind(this),
+          this._translations,
+        )}
+        ${createAddButtonToggle(
+          this._showAddButton,
+          this._addButtonChanged.bind(this),
+          this._translations,
+        )}
         ${this._entity
           ? createEntityInfo(this.hass, this._entity, this._translations)
           : createNoEntityMessage(this._translations)}
@@ -123,6 +153,93 @@ class ConfigEditor extends LitElement {
       ...this._config,
       entity: value,
       type: this._config.type || 'custom:simple-inventory-card',
+    };
+
+    this._config = config;
+
+    this.requestUpdate();
+
+    this.dispatchEvent(
+      new CustomEvent('config-changed', {
+        detail: { config: config },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
+  private _debugChanged(event_: CustomEvent): void {
+    if (!this._config) {
+      return;
+    }
+
+    const value = event_.detail?.checked;
+
+    if (this._debug === value) {
+      return;
+    }
+
+    const config: InventoryConfig = {
+      ...this._config,
+      debug: value,
+    };
+
+    this._config = config;
+
+    this.requestUpdate();
+
+    this.dispatchEvent(
+      new CustomEvent('config-changed', {
+        detail: { config: config },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
+  private _headerChanged(event_: CustomEvent): void {
+    if (!this._config) {
+      return;
+    }
+
+    const value = event_.detail?.checked;
+
+    if (this._showHeader === value) {
+      return;
+    }
+
+    const config: InventoryConfig = {
+      ...this._config,
+      show_header: value,
+    };
+
+    this._config = config;
+
+    this.requestUpdate();
+
+    this.dispatchEvent(
+      new CustomEvent('config-changed', {
+        detail: { config: config },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
+  private _addButtonChanged(event_: CustomEvent): void {
+    if (!this._config) {
+      return;
+    }
+
+    const value = event_.detail?.checked;
+
+    if (this._showAddButton === value) {
+      return;
+    }
+
+    const config: InventoryConfig = {
+      ...this._config,
+      show_add_button: value,
     };
 
     this._config = config;

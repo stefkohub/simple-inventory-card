@@ -43,6 +43,13 @@ class SimpleInventoryCard extends LitElement {
       throw new Error('Entity is required');
     }
     this._config = config;
+    this._log('Config set', config);
+  }
+
+  private _log(message: string, ...args: any[]): void {
+    if (this._config?.debug) {
+      console.log(`[SimpleInventoryCard] ${message}`, ...args);
+    }
   }
 
   /**
@@ -52,6 +59,7 @@ class SimpleInventoryCard extends LitElement {
   set hass(hass: HomeAssistant) {
     const oldHass = this._hass;
     this._hass = hass;
+    this._log('HASS updated', { language: hass.language, entities: Object.keys(hass.states).length });
 
     if (!oldHass) {
       this._loadTranslations().then(() => {
@@ -95,7 +103,9 @@ class SimpleInventoryCard extends LitElement {
   }
 
   render(): void {
+    this._log('Render called');
     if (!this._config || !this._hass || !this.renderRoot) {
+      this._log('Render aborted: missing config, hass, or renderRoot');
       return;
     }
 

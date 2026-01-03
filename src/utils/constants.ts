@@ -99,7 +99,7 @@ export const DEFAULTS = {
   EXPIRY_DATE: '',
   LOCATION: '',
   QUANTITY: 1,
-  SORT_METHOD: 'name',
+  SORT_METHOD: 'category',
   TODO_LIST: '',
   UNIT: '',
 };

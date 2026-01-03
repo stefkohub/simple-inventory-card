@@ -91,16 +91,21 @@ export class EventHandler {
 
   private async handleClick(event: Event): Promise<void> {
     const target = event.target as HTMLElement;
-    if (target.tagName === 'BUTTON' && target.hasAttribute('data-processing')) {
+    const button = target.closest('button') as HTMLButtonElement | null;
+
+    if (button && button.hasAttribute('data-processing')) {
       event.preventDefault();
       event.stopPropagation();
       return;
     }
 
-    if (target.dataset.action && target.dataset.name) {
+    const action = button?.dataset.action;
+    const itemName = button?.dataset.name;
+
+    if (action && itemName) {
       event.preventDefault();
       event.stopPropagation();
-      await this.handleItemAction(target, target.dataset.action, target.dataset.name);
+      await this.handleItemAction(button, action, itemName);
       return;
     }
 
@@ -109,8 +114,8 @@ export class EventHandler {
       return; // Don't prevent default - let modals handle it
     }
 
-    const buttonId = target.id;
-    if (buttonId && target.tagName === 'BUTTON') {
+    const buttonId = button?.id;
+    if (buttonId && button) {
       switch (buttonId) {
         case ELEMENTS.OPEN_ADD_MODAL: {
           event.preventDefault();
@@ -145,22 +150,22 @@ export class EventHandler {
       return;
     }
 
-    if (target.tagName === 'BUTTON') {
-      if (target.classList.contains(CSS_CLASSES.SAVE_BTN)) {
+    if (button) {
+      if (button.classList.contains(CSS_CLASSES.SAVE_BTN)) {
         event.preventDefault();
         event.stopPropagation();
-        if (target.closest(`#${ELEMENTS.EDIT_MODAL}`)) {
+        if (button.closest(`#${ELEMENTS.EDIT_MODAL}`)) {
           await this.handleSaveEdits();
         }
         return;
       }
 
-      if (target.classList.contains(CSS_CLASSES.CANCEL_BTN)) {
+      if (button.classList.contains(CSS_CLASSES.CANCEL_BTN)) {
         event.preventDefault();
         event.stopPropagation();
-        if (target.closest(`#${ELEMENTS.ADD_MODAL}`)) {
+        if (button.closest(`#${ELEMENTS.ADD_MODAL}`)) {
           this.modals.closeAddModal();
-        } else if (target.closest(`#${ELEMENTS.EDIT_MODAL}`)) {
+        } else if (button.closest(`#${ELEMENTS.EDIT_MODAL}`)) {
           this.modals.closeEditModal();
         }
         return;

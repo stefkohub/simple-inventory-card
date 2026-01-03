@@ -5,7 +5,7 @@ import { createAddModal, createEditModal } from '../templates/modalTemplates';
 import { createItemsList } from '../templates/itemList';
 import { createSortOptions } from '../templates/sortOptions';
 import { createActiveFiltersDisplay } from '../templates/filters';
-import { InventoryItem } from '../types/homeAssistant';
+import { InventoryItem, InventoryConfig } from '../types/homeAssistant';
 import { FilterState } from '../types/filterState';
 import { TodoList } from '../types/todoList';
 import { styles } from '../styles/styles';
@@ -23,31 +23,92 @@ export function generateCardHTML(
   allItems: readonly InventoryItem[],
   description: string | undefined,
   translations: TranslationData,
+  config: InventoryConfig,
 ): string {
+  const showHeader = config.show_header ?? true;
+  const showAddButton = config.show_add_button === true;
+  const showSearch = config.show_search == true; // Default false
+  const showSort = config.show_sort == true; // Default false
+  const showAutoAddInfo = config.show_auto_add_info == true; // Default false
+  const categoryCounts = allItems.reduce<Record<string, number>>((counts, item) => {
+    const category = item.category?.trim() || 'Uncategorized';
+    counts[category] = (counts[category] || 0) + 1;
+    return counts;
+  }, {});
+  const categoryPills = Object.keys(categoryCounts)
+    .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
+    .map(
+      (category) => `
+        <span class="category-pill">
+          <span class="category-dot"></span>
+          <span class="category-name">${category}</span>
+          <span class="category-count">${categoryCounts[category]}</span>
+        </span>
+      `,
+    )
+    .join('');
+
   return `
     <style>${styles}</style>
     <ha-card>
-      ${createInventoryHeader(inventoryName, allItems as InventoryItem[], translations, description)}
+      <div class="category-bar">
+        <span class="category-label">${TranslationManager.localize(
+          translations,
+          'categories.title',
+          undefined,
+          'Categories',
+        )}</span>
+        <div class="category-pills">${categoryPills}</div>
+      </div>
 
+      ${
+        showHeader
+          ? createInventoryHeader(
+              inventoryName,
+              allItems as InventoryItem[],
+              translations,
+              description,
+            )
+          : ''
+      }
+
+      ${showSort ? `
       <div class="controls-row">
         <div class="sorting-controls">
           ${createSortOptions(sortMethod, translations)}
         </div>
-        <button id="${ELEMENTS.OPEN_ADD_MODAL}" class="add-new-btn">
-          + ${TranslationManager.localize(translations, 'modal.add_item', undefined, 'Add Item')}
-        </button>
+        ${
+          showAddButton
+            ? `<button id="${ELEMENTS.OPEN_ADD_MODAL}" class="add-new-btn">
+                + ${TranslationManager.localize(translations, 'modal.add_item', undefined, 'Add Item')}
+              </button>`
+            : ''
+        }
       </div>
+      ` : `
+      <div class="controls-row">
+        ${
+          showAddButton
+            ? `<button id="${ELEMENTS.OPEN_ADD_MODAL}" class="add-new-btn add-new-btn-full">
+                + ${TranslationManager.localize(translations, 'modal.add_item', undefined, 'Add Item')}
+              </button>`
+            : ''
+        }
+      </div>
+      `}
 
+      ${showSearch ? `
       <div class="search-controls">
         ${createSearchAndFilters(filters, categories, locations, translations)}
       </div>
+      ` : ''}
 
       ${createActiveFiltersDisplay(filters, translations)}
 
       <div class="items-container">
         ${
           items.length > 0
-            ? createItemsList(items, sortMethod, todoLists, translations)
+            ? createItemsList(items, sortMethod, todoLists, translations, showAutoAddInfo)
             : `<div class="empty-state">${TranslationManager.localize(translations, 'items.no_items', undefined, 'No items in inventory')}</div>`
         }
       </div>

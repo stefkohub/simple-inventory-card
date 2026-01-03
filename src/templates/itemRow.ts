@@ -8,7 +8,16 @@ export function createItemRowTemplate(
   item: InventoryItem,
   todoLists: TodoList[],
   translations: TranslationData,
+  showAutoAddInfo: boolean = true,
 ): string {
+  const isLowStock = item.quantity > 0 && item.quantity <= 1;
+  const lowStockLabel = TranslationManager.localize(
+    translations,
+    'items.last_item',
+    undefined,
+    'Last',
+  );
+
   const getTodoListName = (entityId: string): string => {
     const list = todoLists.find((l) => l.entity_id === entityId || l.id === entityId);
     return list ? list.name : entityId;
@@ -69,52 +78,64 @@ export function createItemRowTemplate(
     ? getExpiryStatus(item.expiry_date, item.expiry_alert_days)
     : null;
 
-  const renderLocationAndCategory = () => {
-    if (item.location && item.category) {
-      return `<span class="location-category">${item.location} | ${item.category}</span>`;
-    } else if (item.location) {
-      return `<span class="location">${item.location}</span>`;
-    } else if (item.category) {
-      return `<span class="category">${item.category}</span>`;
-    } else {
-      return '';
-    }
-  };
+  const metaParts: string[] = [];
+  if (item.location) {
+    metaParts.push(`<span class="item-meta-tag">${item.location}</span>`);
+  }
+  if (item.category) {
+    metaParts.push(`<span class="item-meta-tag">${item.category}</span>`);
+  }
+  if (item.description) {
+    metaParts.push(`<span class="item-meta-text">${item.description}</span>`);
+  }
+
+  const infoBadges: string[] = [];
+  if (expiryInfo) {
+    infoBadges.push(
+      `<span class="item-pill expiry ${expiryInfo.class}">${expiryInfo.label}</span>`,
+    );
+  }
+  if (item.auto_add_enabled && showAutoAddInfo) {
+    infoBadges.push(
+      `<span class="item-pill auto-add-info">${TranslationManager.localize(
+        translations,
+        'items.auto_add_info',
+        {
+          quantity: item.auto_add_to_list_quantity || 0,
+          list: getTodoListName(item.todo_list || ''),
+        },
+        `Auto-add at ≤ ${item.auto_add_to_list_quantity || 0} → ${getTodoListName(item.todo_list || '')}`,
+      )}</span>`,
+    );
+  }
 
   return `
-    <div class="item-row ${item.quantity === 0 ? 'zero-quantity' : ''} ${item.auto_add_enabled ? 'auto-add-enabled' : ''}">
-      <div class="item-header">
-        <span class="item-name">${item.name}</span>
-        ${renderLocationAndCategory()}
-      </div>
-      <div class="item-description">
-        <span>${item.description || ''}</span>
-      </div>
-      <div class="item-footer">
-        <div class="item-details">
-          <span class="quantity">${item.quantity} ${item.unit || ''}</span>
-          ${expiryInfo ? `<span class="expiry ${expiryInfo.class}">${expiryInfo.label}</span>` : ''}
-          ${
-            item.auto_add_enabled
-              ? `<span class="auto-add-info">${TranslationManager.localize(
-                  translations,
-                  'items.auto_add_info',
-                  {
-                    quantity: item.auto_add_to_list_quantity || 0,
-                    list: getTodoListName(item.todo_list || ''),
-                  },
-                  `Auto-add at ≤ ${item.auto_add_to_list_quantity || 0} → ${getTodoListName(item.todo_list || '')}`,
-                )}</span>`
-              : ''
-          }
-
+    <div class="item-row ${item.quantity === 0 ? 'zero-quantity' : ''} ${item.auto_add_enabled ? 'auto-add-enabled' : ''} ${isLowStock ? 'item-row--low' : ''}">
+      <div class="item-main">
+        <div class="item-title-row">
+          <span class="item-name">${item.name}</span>
+          ${isLowStock ? `<span class="item-badge item-badge--low">${lowStockLabel}</span>` : ''}
         </div>
-        <div class="item-controls">
-          <button class="edit-btn" data-action="open_edit" data-name="${item.name}">⚙️</button>
-          <button class="control-btn" data-action="decrement" data-name="${item.name}" ${item.quantity === 0 ? 'disabled' : ''}>➖</button>
-          <button class="control-btn" data-action="increment" data-name="${item.name}">➕</button>
-          <button class="control-btn" data-action="remove" data-name="${item.name}">❌</button>
-        </div>
+        ${metaParts.length > 0 ? `<div class="item-subline">${metaParts.join('<span class="item-meta-sep">•</span>')}</div>` : ''}
+        ${infoBadges.length > 0 ? `<div class="item-info-row">${infoBadges.join('')}</div>` : ''}
+      </div>
+      <div class="item-qty ${item.quantity === 0 ? 'is-zero' : ''}">
+        <span class="qty-value">${item.quantity}</span>
+        ${item.unit ? `<span class="qty-unit">${item.unit}</span>` : ''}
+      </div>
+      <div class="item-controls">
+        <button class="btn-icon btn-increment" data-action="increment" data-name="${item.name}" title="${TranslationManager.localize(translations, 'actions.increment', undefined, 'Increase quantity')}">
+          <span class="btn-icon-text">+</span>
+        </button>
+        <button class="btn-icon btn-decrement" data-action="decrement" data-name="${item.name}" ${item.quantity === 0 ? 'disabled' : ''} title="${TranslationManager.localize(translations, 'actions.decrement', undefined, 'Decrease quantity')}">
+          <span class="btn-icon-text">−</span>
+        </button>
+        <button class="btn-icon btn-edit" data-action="open_edit" data-name="${item.name}" title="${TranslationManager.localize(translations, 'actions.edit', undefined, 'Edit')}">
+          <span class="btn-icon-text">✎</span>
+        </button>
+        <button class="btn-icon btn-remove" data-action="remove" data-name="${item.name}" title="${TranslationManager.localize(translations, 'actions.remove', undefined, 'Remove item')}">
+          <span class="btn-icon-text">🗑️</span>
+        </button>
       </div>
     </div>
   `;

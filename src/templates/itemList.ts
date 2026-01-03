@@ -11,6 +11,7 @@ export function createItemsList(
   sortMethod: string,
   todoLists: TodoList[],
   translations: TranslationData,
+  showAutoAddInfo: boolean = true,
 ): string {
   if (items.length === 0) {
     const noItemsMessage = TranslationManager.localize(
@@ -23,32 +24,42 @@ export function createItemsList(
   }
 
   if (sortMethod === 'category') {
-    return createItemsByCategory(items, todoLists, translations);
+    return createItemsByCategory(items, todoLists, translations, showAutoAddInfo);
   }
 
   if (sortMethod === 'location') {
-    return createItemsByLocation(items, todoLists, translations);
+    return createItemsByLocation(items, todoLists, translations, showAutoAddInfo);
   }
 
-  return items.map((item) => createItemRowTemplate(item, todoLists, translations)).join('');
+  return items.map((item) => createItemRowTemplate(item, todoLists, translations, showAutoAddInfo)).join('');
 }
 
 export function createItemsByCategory(
   items: InventoryItem[],
   todoLists: TodoList[],
   translations: TranslationData,
+  showAutoAddInfo: boolean = true,
 ): string {
   const grouped = Utilities.groupItemsByCategory(items);
   const sortedCategories = Object.keys(grouped).sort();
 
   return sortedCategories
     .map(
-      (category) => `
+      (category) => {
+        // Sort items alphabetically within each category
+        const sortedItems = grouped[category].sort((a, b) => a.name.localeCompare(b.name));
+        const itemCount = sortedItems.length;
+
+        return `
         <div class="${CSS_CLASSES.CATEGORY_GROUP}">
-          <div class="${CSS_CLASSES.CATEGORY_HEADER}">${category}</div>
-          ${grouped[category].map((item) => createItemRowTemplate(item, todoLists, translations)).join('')}
+          <div class="${CSS_CLASSES.CATEGORY_HEADER}">
+            <span class="category-name">${category}</span>
+            <span class="category-count">${itemCount} ${TranslationManager.localize(translations, 'items.count', undefined, 'item')}${itemCount !== 1 ? 's' : ''}</span>
+          </div>
+          ${sortedItems.map((item) => createItemRowTemplate(item, todoLists, translations, showAutoAddInfo)).join('')}
         </div>
-      `,
+        `;
+      },
     )
     .join('');
 }
@@ -57,6 +68,7 @@ export function createItemsByLocation(
   items: InventoryItem[],
   todoLists: TodoList[],
   translations: TranslationData,
+  showAutoAddInfo: boolean = true,
 ): string {
   const grouped = Utilities.groupItemsByLocation(items);
   const sortedLocations = Object.keys(grouped).sort();
@@ -65,7 +77,7 @@ export function createItemsByLocation(
       (location) => `
         <div class="${CSS_CLASSES.LOCATION_GROUP}">
           <div class="${CSS_CLASSES.LOCATION_HEADER}">${location}</div>
-          ${grouped[location].map((item) => createItemRowTemplate(item, todoLists, translations)).join('')}
+          ${grouped[location].map((item) => createItemRowTemplate(item, todoLists, translations, showAutoAddInfo)).join('')}
         </div>
 `,
     )

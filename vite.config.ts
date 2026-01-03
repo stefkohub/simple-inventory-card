@@ -36,7 +36,7 @@ export default defineConfig({
     sourcemap: false,
     copyPublicDir: false,
   },
-  publicDir: false,
+  publicDir: 'public',
   resolve: {
     extensions: ['.js', '.ts'],
     alias: {

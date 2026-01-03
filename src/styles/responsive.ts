@@ -12,6 +12,30 @@ export const responsiveStyles: CSSResult = css`
       margin-top: 8px;
     }
 
+    .item-controls {
+      gap: 4px;
+    }
+
+    .btn-icon {
+      width: 32px;
+      height: 32px;
+      font-size: 14px;
+    }
+
+    .btn-icon-text {
+      font-size: 12px;
+    }
+
+    .category-header {
+      padding: 8px 12px;
+      font-size: 1em;
+    }
+
+    .category-count {
+      font-size: 0.8em;
+      padding: 1px 6px;
+    }
+
     .modal-content {
       padding: 24px;
       margin: 16px;

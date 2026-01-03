@@ -54,6 +54,14 @@ describe('Renderer', () => {
       },
     };
 
+    const mockConfig = {
+      type: 'custom:simple-inventory-card',
+      entity: 'sensor.test_inventory',
+      show_search: true,
+      show_sort: true,
+      show_auto_add_info: true,
+    };
+
     vi.clearAllMocks();
 
     vi.mocked(Utilities.getInventoryName).mockReturnValue('Test Inventory');
@@ -105,6 +113,14 @@ describe('Renderer', () => {
         last_updated: '2023-01-01T00:00:00Z',
       };
 
+      const mockConfig = {
+        type: 'custom:simple-inventory-card',
+        entity: 'sensor.test_inventory',
+        show_search: true,
+        show_sort: true,
+        show_auto_add_info: true,
+      };
+
       renderer.renderCard(
         mockState,
         'test.entity',
@@ -113,6 +129,7 @@ describe('Renderer', () => {
         'name',
         mockTodoLists,
         mockTranslations,
+        mockConfig,
       );
 
       expect(Utilities.getInventoryName).toHaveBeenCalledWith(mockState, 'test.entity');
@@ -128,6 +145,7 @@ describe('Renderer', () => {
         mockState.attributes.items,
         'Test Description',
         mockTranslations,
+        mockConfig,
       );
       expect(mockShadowRoot.innerHTML).toBe('<div>Generated Card HTML</div>');
     });
@@ -143,6 +161,14 @@ describe('Renderer', () => {
       } as HassEntity;
       const mockItems: InventoryItem[] = [];
 
+      const mockConfig = {
+        type: 'custom:simple-inventory-card',
+        entity: 'sensor.test_inventory',
+        show_search: true,
+        show_sort: true,
+        show_auto_add_info: true,
+      };
+
       renderer.renderCard(
         mockState,
         'test.entity',
@@ -151,6 +177,7 @@ describe('Renderer', () => {
         'name',
         mockTodoLists,
         mockTranslations,
+        mockConfig,
       );
 
       expect(generateCardHTML).toHaveBeenCalledWith(
@@ -164,6 +191,7 @@ describe('Renderer', () => {
         [], // Empty allItems when no attributes
         'Test Description',
         mockTranslations,
+        mockConfig,
       );
     });
 
@@ -178,6 +206,14 @@ describe('Renderer', () => {
       };
       const mockItems: InventoryItem[] = [];
 
+      const mockConfig = {
+        type: 'custom:simple-inventory-card',
+        entity: 'sensor.test_inventory',
+        show_search: true,
+        show_sort: true,
+        show_auto_add_info: true,
+      };
+
       renderer.renderCard(
         mockState,
         'test.entity',
@@ -186,6 +222,7 @@ describe('Renderer', () => {
         'name',
         mockTodoLists,
         mockTranslations,
+        mockConfig,
       );
 
       expect(generateCardHTML).toHaveBeenCalledWith(
@@ -199,11 +236,20 @@ describe('Renderer', () => {
         [], // Empty allItems when attributes.items is undefined
         'Test Description',
         mockTranslations,
+        mockConfig,
       );
     });
 
     it('should handle null state', () => {
       const mockItems: InventoryItem[] = [];
+
+      const mockConfig = {
+        type: 'custom:simple-inventory-card',
+        entity: 'sensor.test_inventory',
+        show_search: true,
+        show_sort: true,
+        show_auto_add_info: true,
+      };
 
       renderer.renderCard(
         null as any,
@@ -213,6 +259,7 @@ describe('Renderer', () => {
         'name',
         mockTodoLists,
         mockTranslations,
+        mockConfig,
       );
 
       expect(generateCardHTML).toHaveBeenCalledWith(
@@ -226,6 +273,7 @@ describe('Renderer', () => {
         [],
         'Test Description',
         mockTranslations,
+        mockConfig,
       );
     });
 
@@ -292,6 +340,14 @@ describe('Renderer', () => {
         last_updated: '2023-01-01T00:00:00Z',
       };
 
+      const mockConfig = {
+        type: 'custom:simple-inventory-card',
+        entity: 'sensor.test_inventory',
+        show_search: true,
+        show_sort: true,
+        show_auto_add_info: true,
+      };
+
       renderer.renderCard(
         mockState,
         'test.entity',
@@ -300,6 +356,7 @@ describe('Renderer', () => {
         'name',
         mockTodoLists,
         mockTranslations,
+        mockConfig,
       );
 
       expect(generateCardHTML).toHaveBeenCalledWith(
@@ -313,6 +370,7 @@ describe('Renderer', () => {
         mockState.attributes.items,
         'Test Description',
         mockTranslations,
+        mockConfig,
       );
     });
 
@@ -374,6 +432,14 @@ describe('Renderer', () => {
         last_updated: '2023-01-01T00:00:00Z',
       };
 
+      const mockConfig = {
+        type: 'custom:simple-inventory-card',
+        entity: 'sensor.test_inventory',
+        show_search: true,
+        show_sort: true,
+        show_auto_add_info: true,
+      };
+
       renderer.renderCard(
         mockState,
         'test.entity',
@@ -382,6 +448,7 @@ describe('Renderer', () => {
         'name',
         mockTodoLists,
         mockTranslations,
+        mockConfig,
       );
 
       expect(generateCardHTML).toHaveBeenCalledWith(
@@ -395,6 +462,7 @@ describe('Renderer', () => {
         mockState.attributes.items,
         'Test Description',
         mockTranslations,
+        mockConfig,
       );
     });
 
@@ -410,6 +478,14 @@ describe('Renderer', () => {
         last_updated: '2023-01-01T00:00:00Z',
       };
 
+      const mockConfig = {
+        type: 'custom:simple-inventory-card',
+        entity: 'sensor.test_inventory',
+        show_search: true,
+        show_sort: true,
+        show_auto_add_info: true,
+      };
+
       renderer.renderCard(
         mockState,
         'test.entity',
@@ -418,6 +494,7 @@ describe('Renderer', () => {
         'name',
         mockTodoLists,
         mockTranslations,
+        mockConfig,
       );
 
       expect(generateCardHTML).toHaveBeenCalledWith(
@@ -431,6 +508,7 @@ describe('Renderer', () => {
         [],
         'Test Description',
         mockTranslations,
+        mockConfig,
       );
     });
 
@@ -453,6 +531,14 @@ describe('Renderer', () => {
       };
       const mockTodoLists: TodoList[] = [{ id: '1', name: 'Test List' } as TodoList];
 
+      const mockConfig = {
+        type: 'custom:simple-inventory-card',
+        entity: 'sensor.test_inventory',
+        show_search: true,
+        show_sort: true,
+        show_auto_add_info: true,
+      };
+
       renderer.renderCard(
         mockState,
         'custom.entity',
@@ -461,6 +547,7 @@ describe('Renderer', () => {
         'category',
         mockTodoLists,
         mockTranslations,
+        mockConfig,
       );
 
       expect(generateCardHTML).toHaveBeenCalledWith(
@@ -474,6 +561,7 @@ describe('Renderer', () => {
         [],
         'Test Description',
         mockTranslations,
+        mockConfig,
       );
     });
   });
@@ -567,7 +655,15 @@ describe('Renderer', () => {
         last_updated: '2023-01-01T00:00:00Z',
       };
 
-      renderer.renderCard(mockState, 'test.entity', [], mockFilters, 'name', [], mockTranslations);
+      const mockConfig = {
+        type: 'custom:simple-inventory-card',
+        entity: 'sensor.test_inventory',
+        show_search: true,
+        show_sort: true,
+        show_auto_add_info: true,
+      };
+
+      renderer.renderCard(mockState, 'test.entity', [], mockFilters, 'name', [], mockTranslations, mockConfig);
 
       expect(generateCardHTML).toHaveBeenCalledWith(
         expect.any(String),
@@ -580,6 +676,7 @@ describe('Renderer', () => {
         expect.any(Array),
         expect.any(String),
         expect.any(Object),
+        mockConfig,
       );
     });
 
@@ -607,7 +704,15 @@ describe('Renderer', () => {
         last_updated: '2023-01-01T00:00:00Z',
       };
 
-      renderer.renderCard(mockState, 'test.entity', [], mockFilters, 'name', [], mockTranslations);
+      const mockConfig = {
+        type: 'custom:simple-inventory-card',
+        entity: 'sensor.test_inventory',
+        show_search: true,
+        show_sort: true,
+        show_auto_add_info: true,
+      };
+
+      renderer.renderCard(mockState, 'test.entity', [], mockFilters, 'name', [], mockTranslations, mockConfig);
 
       expect(generateCardHTML).toHaveBeenCalledWith(
         expect.any(String),
@@ -620,6 +725,7 @@ describe('Renderer', () => {
         expect.any(Array),
         expect.any(String),
         expect.any(Object),
+        mockConfig,
       );
     });
 
@@ -663,7 +769,15 @@ describe('Renderer', () => {
         last_updated: '2023-01-01T00:00:00Z',
       };
 
-      renderer.renderCard(mockState, 'test.entity', [], mockFilters, 'name', [], mockTranslations);
+      const mockConfig = {
+        type: 'custom:simple-inventory-card',
+        entity: 'sensor.test_inventory',
+        show_search: true,
+        show_sort: true,
+        show_auto_add_info: true,
+      };
+
+      renderer.renderCard(mockState, 'test.entity', [], mockFilters, 'name', [], mockTranslations, mockConfig);
 
       // Whitespace-only categories should be included since they're truthy
       expect(generateCardHTML).toHaveBeenCalledWith(
@@ -677,6 +791,7 @@ describe('Renderer', () => {
         expect.any(Array), // all items
         expect.any(String), // description
         expect.any(Object), // translations
+        mockConfig,
       );
     });
   });

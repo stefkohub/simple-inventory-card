@@ -105,8 +105,10 @@ describe('createItemRowTemplate', () => {
     it('should include all control buttons', () => {
       const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
 
-      expect(result).toContain('class="edit-btn"');
-      expect(result).toContain('class="control-btn"');
+      expect(result).toContain('class="btn-icon btn-edit"');
+      expect(result).toContain('class="btn-icon btn-decrement"');
+      expect(result).toContain('class="btn-icon btn-increment"');
+      expect(result).toContain('class="btn-icon btn-remove"');
       expect(result).toContain('data-action="open_edit"');
       expect(result).toContain('data-action="decrement"');
       expect(result).toContain('data-action="increment"');
@@ -310,18 +312,19 @@ describe('createItemRowTemplate', () => {
     it('should include edit button with correct attributes', () => {
       const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
 
-      expect(result).toContain('class="edit-btn"');
+      expect(result).toContain('class="btn-icon btn-edit"');
       expect(result).toContain('data-action="open_edit"');
       expect(result).toContain('data-name="Apple"');
-      expect(result).toContain('⚙️');
+      expect(result).toContain('✏️');
     });
 
     it('should include enabled decrement button when quantity > 0', () => {
       const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
 
+      expect(result).toContain('class="btn-icon btn-decrement"');
       expect(result).toContain('data-action="decrement"');
       expect(result).toContain('data-name="Apple"');
-      expect(result).toContain('➖');
+      expect(result).toContain('−');
       expect(result).not.toContain('disabled');
     });
 
@@ -329,9 +332,10 @@ describe('createItemRowTemplate', () => {
       const zeroQuantityItem = { ...baseItem, quantity: 0 };
       const result = createItemRowTemplate(zeroQuantityItem, mockTodoLists, mockTranslations);
 
+      expect(result).toContain('class="btn-icon btn-decrement"');
       expect(result).toContain('data-action="decrement"');
       expect(result).toContain('disabled');
-      expect(result).toContain('➖');
+      expect(result).toContain('−');
     });
 
     it('should include data-name attribute for all buttons', () => {

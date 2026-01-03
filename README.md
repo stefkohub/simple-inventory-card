@@ -15,3 +15,27 @@ You can set an expiration date for an item, how far ahead you want to be warned,
 <img width="539" height="258" alt="image" src="https://github.com/user-attachments/assets/9d43c244-1cd9-47f3-8c35-7ac1eb040ff6" />
 
 (the description will not sync with the built-in Home Assistant `todo.shopping_list`, but any other list you create will work)
+
+## Development
+
+This project requires Node.js 20.19.0 or later. Use [nvm](https://github.com/nvm-sh/nvm) to manage Node versions:
+
+```bash
+# Install the required Node version
+nvm install
+
+# Use the required Node version
+nvm use
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Run tests
+npm run test:run
+
+# Build for production
+npm run build
+```

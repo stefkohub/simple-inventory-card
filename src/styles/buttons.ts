@@ -1,10 +1,39 @@
 import { CSSResult, css } from 'lit-element';
 
+/*
+    display: var(--ha-icon-display,inline-flex);
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    vertical-align: middle;
+    fill: var(--icon-primary-color,currentcolor);
+    width: var(--mdc-icon-size,24px);
+    height: var(--mdc-icon-size,24px);
+
+
+  .add-new-btn {
+    padding: 12px 16px;
+    background: var(--primary-color);
+    color: var(--text-primary-color, white);
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+*/
+
 export const buttonStyles: CSSResult = css`
   button {
     padding: 14px 24px;
     border: none;
-    border-radius: 8px;
+    border-radius: 999px;
     cursor: pointer;
     font-size: 14px;
     font-weight: 600;
@@ -27,20 +56,14 @@ export const buttonStyles: CSSResult = css`
   }
 
   .add-new-btn {
-    padding: 12px 16px;
-    background: var(--primary-color);
-    color: var(--text-primary-color, white);
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--primary-text-color);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   .add-new-btn:hover {
@@ -51,6 +74,11 @@ export const buttonStyles: CSSResult = css`
 
   .add-new-btn:active {
     transform: translateY(0);
+  }
+
+  .add-new-btn-full {
+    width: 100%;
+    margin-top: 8px;
   }
 
   .control-btn {
@@ -71,6 +99,72 @@ export const buttonStyles: CSSResult = css`
     background: var(--disabled-color, #ccc);
     transform: none;
     box-shadow: none;
+  }
+
+  .btn-icon {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+      0 6px 14px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-icon:hover {
+    transform: translateY(-1px);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+      0 10px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .btn-icon:active {
+    transform: translateY(0);
+  }
+
+  .btn-edit {
+    background: rgba(255, 255, 255, 0.02);
+    color: rgba(255, 255, 255, 0.85);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .btn-decrement {
+    background: rgba(48, 24, 21, 0.7);
+    color: #ff7b6c;
+    border-color: rgba(255, 123, 108, 0.45);
+  }
+
+  .btn-decrement:disabled {
+    background: rgba(255, 255, 255, 0.02);
+    color: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.06);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn-increment {
+    background: rgba(17, 36, 54, 0.7);
+    color: #3cb0ff;
+    border-color: rgba(60, 176, 255, 0.45);
+  }
+
+  .btn-remove {
+    background: rgba(55, 22, 20, 0.75);
+    color: #ff5c4d;
+    border-color: rgba(255, 92, 77, 0.5);
+  }
+
+  .btn-icon-text {
+    font-size: 18px;
+    line-height: 1;
   }
 
   .add-btn {

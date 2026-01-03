@@ -230,10 +230,18 @@ describe('RenderingCoordinator', () => {
         entityState,
         mockConfig.entity,
         mockInventoryItems,
-        expect.any(Object),
-        'name',
+        {
+          category: '',
+          expiry: '',
+          location: '',
+          quantity: '',
+          searchText: '',
+          showAdvanced: false,
+        },
+        'category',
         mockTodoLists,
         mockTranslations,
+        mockConfig,
       );
       expect(mockServices.eventHandler.setupEventListeners).toHaveBeenCalled();
       expect(mockServices.filters.updateFilterIndicators).toHaveBeenCalled();
@@ -259,6 +267,7 @@ describe('RenderingCoordinator', () => {
         DEFAULTS.SORT_METHOD,
         mockTodoLists,
         mockTranslations,
+        mockConfig,
       );
     });
 

@@ -18,8 +18,9 @@ export const controlStyles: CSSResult = css`
   .search-controls {
     margin-bottom: 20px;
     padding: 12px;
-    background: var(--secondary-background-color, #f5f5f5);
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .search-row {
@@ -42,8 +43,9 @@ export const controlStyles: CSSResult = css`
   .sorting-controls {
     margin-bottom: 20px;
     padding: 12px;
-    background: var(--secondary-background-color, #f5f5f5);
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     align-items: center;
     gap: 12px;
@@ -51,7 +53,7 @@ export const controlStyles: CSSResult = css`
 
   .sorting-controls label {
     font-weight: bold;
-    color: var(--primary-text-color);
+    color: rgba(255, 255, 255, 0.7);
     white-space: nowrap;
     margin-bottom: 0;
   }
@@ -64,7 +66,7 @@ export const controlStyles: CSSResult = css`
   .advanced-filters {
     margin-top: 16px;
     padding-top: 16px;
-    border-top: 1px solid var(--divider-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .filter-row {
@@ -85,7 +87,7 @@ export const controlStyles: CSSResult = css`
   .filter-group label {
     font-size: 0.9em;
     font-weight: 500;
-    color: var(--secondary-text-color);
+    color: rgba(255, 255, 255, 0.55);
   }
 
   .filter-actions {
@@ -109,9 +111,9 @@ export const controlStyles: CSSResult = css`
   }
 
   #clear-filters {
-    background: var(--secondary-background-color);
-    color: var(--primary-text-color);
-    border: 1px solid var(--divider-color);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   #apply-filters:hover,

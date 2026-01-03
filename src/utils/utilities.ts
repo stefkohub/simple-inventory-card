@@ -192,10 +192,12 @@ export const Utilities = {
 
     try {
       const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      const todayUTC = new Date(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
 
       const expiry = new Date(expiryDate);
-      const diffTime = expiry.getTime() - today.getTime();
+      const expiryUTC = new Date(expiry.getUTCFullYear(), expiry.getUTCMonth(), expiry.getUTCDate());
+
+      const diffTime = expiryUTC.getTime() - todayUTC.getTime();
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
       return diffDays >= 0 && diffDays <= threshold;

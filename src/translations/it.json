@@ -31,6 +31,7 @@
   },
   "items": {
     "auto_add_info": "Aggiunta automatica a ≤ {quantity} → {list}",
+    "last_item": "Ultimo",
     "no_items": "Nessun oggetto in inventario"
   },
   "header": {
@@ -108,7 +109,12 @@
     "inventory_entity_required": "Entità inventario (Obbligatoria)",
     "items_count": "Oggetti",
     "select_entity_message": "Seleziona un’entità inventario sopra",
-    "selected_inventory": "Inventario selezionato:"
+    "selected_inventory": "Inventario selezionato:",
+    "show_header": "Mostra titolo e sottotitolo",
+    "show_add_button": "Mostra pulsante aggiungi"
+  },
+  "categories": {
+    "title": "Categorie"
   },
   "actions": {
     "confirm_remove": "Rimuovere {name} dall’inventario?"

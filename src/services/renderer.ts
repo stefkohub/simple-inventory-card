@@ -1,6 +1,6 @@
 import { Utilities } from '../utils/utilities';
 import { styles } from '../styles/styles';
-import { HassEntity, InventoryItem } from '../types/homeAssistant';
+import { HassEntity, InventoryItem, InventoryConfig } from '../types/homeAssistant';
 import { FilterState } from '../types/filterState';
 import { TodoList } from '../types/todoList';
 import { generateCardHTML } from '../templates/inventoryCard';
@@ -18,6 +18,7 @@ export class Renderer {
     sortMethod: string,
     todoLists: TodoList[],
     translations: TranslationData,
+    config: InventoryConfig,
   ): void {
     const inventoryName = Utilities.getInventoryName(state, entityId);
     const description = Utilities.getInventoryDescription(state);
@@ -44,6 +45,7 @@ export class Renderer {
       allItems,
       description,
       translations,
+      config,
     );
   }
 

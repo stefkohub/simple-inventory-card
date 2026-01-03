@@ -5,9 +5,9 @@ export const cardHeaderStyles: CSSResult = css`
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 16px;
-    border-bottom: 1px solid var(--divider-color);
-    background-color: var(--card-background-color);
+    padding: 12px 8px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background-color: transparent;
   }
 
   .header-content {
@@ -17,16 +17,18 @@ export const cardHeaderStyles: CSSResult = css`
 
   .inventory-title {
     margin: 0 0 2px 0;
-    font-size: 1.1em; /* Reduced from 1.2em */
-    font-weight: 500;
-    color: var(--primary-text-color);
+    font-size: 1em;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
     line-height: 1.1;
   }
 
   .inventory-description {
     margin: 0;
     font-size: 0.75em; /* Reduced from 0.8em */
-    color: var(--secondary-text-color);
+    color: rgba(255, 255, 255, 0.5);
     line-height: 1.2;
     opacity: 0.8;
     max-width: 300px;

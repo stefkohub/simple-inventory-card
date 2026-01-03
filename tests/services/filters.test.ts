@@ -177,7 +177,7 @@ describe('Filters', () => {
 
         expect(result).toEqual({
           ...testFilters,
-          sortMethod: SORT_METHODS.NAME,
+          sortMethod: SORT_METHODS.CATEGORY,
         });
       });
 
@@ -193,7 +193,7 @@ describe('Filters', () => {
         );
         expect(result).toEqual({
           ...testFilters,
-          sortMethod: SORT_METHODS.NAME,
+          sortMethod: SORT_METHODS.CATEGORY,
         });
 
         consoleSpy.mockRestore();
@@ -206,7 +206,7 @@ describe('Filters', () => {
 
         expect(result).toEqual({
           ...testFilters,
-          sortMethod: SORT_METHODS.NAME,
+          sortMethod: SORT_METHODS.CATEGORY,
         });
       });
 
