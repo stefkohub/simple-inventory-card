@@ -190,13 +190,11 @@ export class Modals {
       initializeAutoComplete({
         id: `${prefix}-${ELEMENTS.LOCATION}`,
         options: locations,
-        shadowRoot: this.shadowRoot,
       });
 
       initializeAutoComplete({
         id: `${prefix}-${ELEMENTS.CATEGORY}`,
         options: categories,
-        shadowRoot: this.shadowRoot,
       });
     }, 0);
   }

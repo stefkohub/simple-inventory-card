@@ -125,9 +125,9 @@ export const itemRowStyles: CSSResult = css`
   .item-badge--location {
     min-width: 0;
     padding: 2px 8px;
-    background: rgba(60, 176, 255, 0.15);
-    color: #6cc0ff;
-    border: 1px solid rgba(60, 176, 255, 0.35);
+    background: var(--location-bg, rgba(60, 176, 255, 0.15));
+    color: var(--location-color, #6cc0ff);
+    border: 1px solid var(--location-border, rgba(60, 176, 255, 0.35));
     text-transform: none;
     letter-spacing: 0.02em;
     font-size: 0.7em;

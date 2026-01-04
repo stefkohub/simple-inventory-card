@@ -21,6 +21,8 @@ export class EventHandler {
 
   private boundClickHandler: EventListener | undefined = undefined;
   private boundChangeHandler: EventListener | undefined = undefined;
+  private boundDocumentClickHandler: EventListener | undefined = undefined;
+  private boundDocumentChangeHandler: EventListener | undefined = undefined;
 
   private eventListenersSetup = false;
 
@@ -65,6 +67,35 @@ export class EventHandler {
     this.renderRoot.addEventListener('click', actualClickHandler);
     this.renderRoot.addEventListener('change', actualChangeHandler);
 
+    this.boundDocumentClickHandler = (event: Event) => {
+      const target = event.target as HTMLElement | null;
+      if (!target) {
+        return;
+      }
+      const modal = target.closest(`#${ELEMENTS.ADD_MODAL}, #${ELEMENTS.EDIT_MODAL}`);
+      if (!modal) {
+        return;
+      }
+      this.handleClick(event).catch((error) => {
+        console.error('Error in handleClick:', error);
+      });
+    };
+
+    this.boundDocumentChangeHandler = (event: Event) => {
+      const target = event.target as HTMLElement | null;
+      if (!target) {
+        return;
+      }
+      const modal = target.closest(`#${ELEMENTS.ADD_MODAL}, #${ELEMENTS.EDIT_MODAL}`);
+      if (!modal) {
+        return;
+      }
+      this.handleChange(event);
+    };
+
+    document.addEventListener('click', this.boundDocumentClickHandler, true);
+    document.addEventListener('change', this.boundDocumentChangeHandler, true);
+
     this.filters.setupSearchInput(this.config.entity, () => this.handleSearchChange());
     this.eventListenersSetup = true;
 
@@ -80,6 +111,12 @@ export class EventHandler {
     }
     if (this.boundChangeHandler) {
       this.renderRoot.removeEventListener('change', this.boundChangeHandler as EventListener);
+    }
+    if (this.boundDocumentClickHandler) {
+      document.removeEventListener('click', this.boundDocumentClickHandler, true);
+    }
+    if (this.boundDocumentChangeHandler) {
+      document.removeEventListener('change', this.boundDocumentChangeHandler, true);
     }
     this.eventListenersSetup = false;
   }

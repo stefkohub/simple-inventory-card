@@ -162,6 +162,9 @@ export class ModalValidationManager {
    * Gets an element from the shadow root by ID
    */
   private getElement<T extends HTMLElement>(id: string): T | null {
-    return this.shadowRoot.getElementById(id) as T | null;
+    return (
+      (this.shadowRoot.getElementById(id) as T | null) ??
+      (document.getElementById(id) as T | null)
+    );
   }
 }

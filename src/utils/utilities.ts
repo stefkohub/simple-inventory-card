@@ -14,6 +14,63 @@ interface ValidationResult {
 }
 
 export const Utilities = {
+  getLocationBadgeStyle(location: string): string {
+    const normalized = location.trim().toLowerCase();
+    if (!normalized) {
+      return '';
+    }
+
+    const palette = [
+      {
+        color: '#6cc0ff',
+        border: 'rgba(60, 176, 255, 0.35)',
+        bg: 'rgba(60, 176, 255, 0.15)',
+      },
+      {
+        color: '#ffb248',
+        border: 'rgba(255, 178, 74, 0.35)',
+        bg: 'rgba(255, 178, 74, 0.15)',
+      },
+      {
+        color: '#6fd391',
+        border: 'rgba(111, 211, 145, 0.35)',
+        bg: 'rgba(111, 211, 145, 0.15)',
+      },
+      {
+        color: '#d48bff',
+        border: 'rgba(212, 139, 255, 0.35)',
+        bg: 'rgba(212, 139, 255, 0.15)',
+      },
+      {
+        color: '#ff7b6c',
+        border: 'rgba(255, 123, 108, 0.35)',
+        bg: 'rgba(255, 123, 108, 0.15)',
+      },
+      {
+        color: '#7cd7e8',
+        border: 'rgba(124, 215, 232, 0.35)',
+        bg: 'rgba(124, 215, 232, 0.15)',
+      },
+      {
+        color: '#ffd56a',
+        border: 'rgba(255, 213, 106, 0.35)',
+        bg: 'rgba(255, 213, 106, 0.15)',
+      },
+      {
+        color: '#9bb5ff',
+        border: 'rgba(155, 181, 255, 0.35)',
+        bg: 'rgba(155, 181, 255, 0.15)',
+      },
+    ];
+
+    let hash = 0;
+    for (let i = 0; i < normalized.length; i += 1) {
+      hash = (hash * 31 + normalized.charCodeAt(i)) >>> 0;
+    }
+
+    const selected = palette[hash % palette.length];
+    return `style="--location-bg:${selected.bg}; --location-border:${selected.border}; --location-color:${selected.color};"`;
+  },
   /**
    * Gets a user-friendly inventory name from entity state
    * @param state - The entity state

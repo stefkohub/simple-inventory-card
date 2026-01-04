@@ -1,7 +1,7 @@
 import { AutoCompleteConfig } from '@/types/autoCompleteConfig';
 
 export function initializeAutoComplete(
-  config: AutoCompleteConfig & { shadowRoot?: ShadowRoot },
+  config: AutoCompleteConfig & { shadowRoot?: ShadowRoot | Document },
 ): void {
   const root = config.shadowRoot || document;
   const input = root.getElementById(config.id) as HTMLInputElement;

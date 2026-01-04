@@ -1,4 +1,5 @@
 import { DEFAULTS } from '@/utils/constants';
+import { Utilities } from '@/utils/utilities';
 import { InventoryItem } from '../types/homeAssistant';
 import { TodoList } from '../types/todoList';
 import { TranslationData } from '@/types/translatableComponent';
@@ -107,11 +108,12 @@ export function createItemRowTemplate(
   }
 
   const locationLabel = item.location?.trim();
+  const locationStyle = locationLabel ? Utilities.getLocationBadgeStyle(locationLabel) : '';
   const lastBadge = isLowStock
     ? `<span class="item-badge item-badge--low">${lowStockLabel}</span>`
     : '';
   const locationBadge = locationLabel
-    ? `<span class="item-badge item-badge--location">${locationLabel}</span>`
+    ? `<span class="item-badge item-badge--location" ${locationStyle}>${locationLabel}</span>`
     : '';
 
   return `

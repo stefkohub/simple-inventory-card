@@ -22,6 +22,7 @@ export class ModalUIManager {
   openAddModal(translations: TranslationData): void {
     const modal = this.getElement<HTMLElement>(ELEMENTS.ADD_MODAL);
     if (modal) {
+      this.portalModal(modal);
       this.formManager.clearAddModalForm();
       this.validationManager.clearError(true);
       modal.classList.add(CSS_CLASSES.SHOW);
@@ -72,6 +73,7 @@ export class ModalUIManager {
 
     const modal = this.getElement<HTMLElement>(ELEMENTS.EDIT_MODAL);
     if (modal) {
+      this.portalModal(modal);
       this.validationManager.clearError(false);
       modal.classList.add(CSS_CLASSES.SHOW);
       this.focusElementWithDelay(ELEMENTS.NAME, true);
@@ -265,7 +267,28 @@ export class ModalUIManager {
    * Gets an element from the shadow root by ID
    */
   private getElement<T extends HTMLElement>(id: string): T | undefined {
-    return this.shadowRoot.getElementById(id) as T | undefined;
+    return (
+      (this.shadowRoot.getElementById(id) as T | undefined) ??
+      (document.getElementById(id) as T | undefined)
+    );
+  }
+
+  private portalModal(modal: HTMLElement): void {
+    const existing = document.getElementById(modal.id);
+    if (existing && existing !== modal) {
+      existing.remove();
+    }
+    if (!modal.querySelector('style[data-sic-modal]')) {
+      const styleNode = this.shadowRoot.querySelector('style');
+      if (styleNode) {
+        const cloned = styleNode.cloneNode(true) as HTMLStyleElement;
+        cloned.setAttribute('data-sic-modal', 'true');
+        modal.prepend(cloned);
+      }
+    }
+    if (modal.parentElement !== document.body) {
+      document.body.appendChild(modal);
+    }
   }
 
   /**
