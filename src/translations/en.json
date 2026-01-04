@@ -115,7 +115,9 @@
     "show_add_button": "Show Add Item Button",
     "light_add_modal": "Use Light Add Popup",
     "light_edit_modal": "Use Light Edit Popup",
-    "transparent_card": "Transparent Card Background"
+    "transparent_card": "Transparent Card Background",
+    "show_description": "Show Inventory Description",
+    "custom_name": "Custom Inventory Title"
   },
   "categories": {
     "title": "Categories",

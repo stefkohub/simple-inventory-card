@@ -43,7 +43,7 @@
     "advanced": "Avanzate",
     "auto_add_id_to_description": "Aggiungi l’ID dell’inventario alla descrizione dell’articolo",
     "auto_add_settings": "Impostazioni auto-aggiunta",
-    "auto_add_when_low": "Aggiungi alla lista attività quando la quantità è bassa",
+    "auto_add_when_low": "Aggiungi alla lista attività quando la quantità è poca",
     "cancel": "Annulla",
     "description": "Descrizione",
     "description_placeholder": "Descrizione dell’articolo",
@@ -115,7 +115,9 @@
     "show_add_button": "Mostra pulsante aggiungi",
     "light_add_modal": "Usa popup leggero per aggiungere",
     "light_edit_modal": "Usa popup leggero per modificare",
-    "transparent_card": "Sfondo card trasparente"
+    "transparent_card": "Sfondo card trasparente",
+    "show_description": "Mostra descrizione inventario",
+    "custom_name": "Titolo inventario personalizzato"
   },
   "categories": {
     "title": "Categorie",

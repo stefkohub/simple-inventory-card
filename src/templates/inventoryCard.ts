@@ -51,6 +51,8 @@ export function generateCardHTML(
     )
     .join('');
 
+  const displayName = config.custom_name?.trim() || inventoryName;
+
   return `
     <style>${styles}</style>
     <ha-card class="${config.transparent_card ? 'card--transparent' : ''}">
@@ -67,10 +69,11 @@ export function generateCardHTML(
       ${
         showHeader
           ? createInventoryHeader(
-              inventoryName,
+              displayName,
               allItems as InventoryItem[],
               translations,
               description,
+              config.show_description ?? true,
             )
           : ''
       }

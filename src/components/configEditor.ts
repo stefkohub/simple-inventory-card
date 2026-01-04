@@ -3,6 +3,7 @@ import { HomeAssistant, InventoryConfig } from '../types/homeAssistant';
 import { Utilities } from '../utils/utilities';
 import {
   createEntitySelector,
+  createCustomNameInput,
   createEntityInfo,
   createNoEntityMessage,
   createDebugToggle,
@@ -11,6 +12,7 @@ import {
   createAddModalVariantToggle,
   createEditModalVariantToggle,
   createTransparentCardToggle,
+  createDescriptionToggle,
 } from '../templates/configEditor';
 import { configEditorStyles } from '../styles/configEditor';
 import { TranslationData } from '@/types/translatableComponent';
@@ -62,11 +64,13 @@ class ConfigEditor extends LitElement {
 
   setConfig(config: InventoryConfig): void {
     const nextConfig: InventoryConfig = {
+      custom_name: '',
       show_header: true,
       show_add_button: false,
       use_light_add_modal: false,
       use_light_edit_modal: false,
       transparent_card: false,
+      show_description: true,
       ...config,
     };
     if (!nextConfig.type) {
@@ -82,6 +86,10 @@ class ConfigEditor extends LitElement {
 
   get _debug(): boolean {
     return this._config?.debug || false;
+  }
+
+  get _customName(): string {
+    return this._config?.custom_name || '';
   }
 
   get _showHeader(): boolean {
@@ -102,6 +110,10 @@ class ConfigEditor extends LitElement {
 
   get _transparentCard(): boolean {
     return this._config?.transparent_card ?? false;
+  }
+
+  get _showDescription(): boolean {
+    return this._config?.show_description ?? true;
   }
 
   render(): TemplateResult {
@@ -145,6 +157,11 @@ class ConfigEditor extends LitElement {
           this._valueChanged.bind(this),
           this._translations,
         )}
+        ${createCustomNameInput(
+          this._customName,
+          this._customNameChanged.bind(this),
+          this._translations,
+        )}
         ${createDebugToggle(
           this._debug,
           this._debugChanged.bind(this),
@@ -173,6 +190,11 @@ class ConfigEditor extends LitElement {
         ${createTransparentCardToggle(
           this._transparentCard,
           this._transparentCardChanged.bind(this),
+          this._translations,
+        )}
+        ${createDescriptionToggle(
+          this._showDescription,
+          this._descriptionChanged.bind(this),
           this._translations,
         )}
         ${this._entity
@@ -222,6 +244,37 @@ class ConfigEditor extends LitElement {
       return currentTarget.checked;
     }
     return (event_ as CustomEvent).detail?.checked;
+  }
+
+  private _customNameChanged(event_: Event): void {
+    if (!this._config) {
+      return;
+    }
+
+    const target = event_.target as HTMLInputElement | null;
+    const currentTarget = event_.currentTarget as HTMLInputElement | null;
+    const value = target?.value ?? currentTarget?.value ?? '';
+
+    if (this._customName === value) {
+      return;
+    }
+
+    const config: InventoryConfig = {
+      ...this._config,
+      custom_name: value,
+    };
+
+    this._config = config;
+
+    this.requestUpdate();
+
+    this.dispatchEvent(
+      new CustomEvent('config-changed', {
+        detail: { config: config },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   private _debugChanged(event_: CustomEvent): void {
@@ -401,6 +454,38 @@ class ConfigEditor extends LitElement {
     const config: InventoryConfig = {
       ...this._config,
       transparent_card: value as boolean,
+    };
+
+    this._config = config;
+
+    this.requestUpdate();
+
+    this.dispatchEvent(
+      new CustomEvent('config-changed', {
+        detail: { config: config },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
+  private _descriptionChanged(event_: CustomEvent): void {
+    if (!this._config) {
+      return;
+    }
+
+    const value = this._getCheckedValue(event_);
+    if (value === undefined) {
+      return;
+    }
+
+    if (this._showDescription === value) {
+      return;
+    }
+
+    const config: InventoryConfig = {
+      ...this._config,
+      show_description: value as boolean,
     };
 
     this._config = config;

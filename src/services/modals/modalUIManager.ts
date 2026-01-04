@@ -22,6 +22,7 @@ export class ModalUIManager {
   openAddModal(translations: TranslationData): void {
     const modal = this.getElement<HTMLElement>(ELEMENTS.ADD_MODAL);
     if (modal) {
+      this.formManager.clearAddModalForm();
       this.validationManager.clearError(true);
       modal.classList.add(CSS_CLASSES.SHOW);
       this.focusElementWithDelay(ELEMENTS.NAME);

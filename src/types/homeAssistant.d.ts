@@ -161,12 +161,14 @@ export interface InventoryItem {
 export interface InventoryConfig extends LovelaceCardConfig {
   type: string;
   entity: string;
+  custom_name?: string;
   debug?: boolean;
   show_header?: boolean;
   show_add_button?: boolean;
   use_light_add_modal?: boolean;
   use_light_edit_modal?: boolean;
   transparent_card?: boolean;
+  show_description?: boolean;
   show_search?: boolean;
   show_sort?: boolean;
   show_auto_add_info?: boolean;

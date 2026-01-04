@@ -96,7 +96,10 @@ function createLightModal(
             ${itemQuantity(prefix, translations)}
             ${itemCategory(prefix, translations, categories)}
           </div>
-          ${itemExpiryDate(prefix, translations)}
+          <div class="form-row">
+            ${itemLocation(prefix, translations, locations)}
+            ${itemExpiryDate(prefix, translations)}
+          </div>
 
           <details class="modal-advanced">
             <summary>
@@ -106,15 +109,14 @@ function createLightModal(
                 undefined,
                 'Advanced',
               )}</span>
-              <span class="advanced-icon">⌄</span>
+              <span class="advanced-icon">▼</span>
             </summary>
             <div class="modal-advanced-content">
               ${expiryAlertDays(prefix, translations)}
               <div class="form-row">
-                ${itemLocation(prefix, translations, locations)}
                 ${itemUnit(prefix, translations)}
+                ${itemDescription(prefix, translations)}
               </div>
-              ${itemDescription(prefix, translations)}
               ${autoAddIdCheckbox(prefix, translations)}
               <div class="form-group auto-add-section">
                 ${autoAddCheckbox(prefix, translations)}

@@ -10,7 +10,7 @@ export function itemCategory(
 ): string {
   return `
     <div class="input-group">
-      <label for="${prefix}-${ELEMENTS.CATEGORY}" class="form-label">
+      <label for="${prefix}-${ELEMENTS.CATEGORY}">
         ${TranslationManager.localize(translations, 'modal.category', undefined, 'Category')}
       </label>
       ${createAutoCompleteInput({

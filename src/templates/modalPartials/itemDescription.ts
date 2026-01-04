@@ -4,8 +4,8 @@ import { ELEMENTS } from '@/utils/constants';
 
 export function itemDescription(prefix: string, translations: TranslationData): string {
   return `
-    <div class="form-group">
-      <label for="${prefix}-${ELEMENTS.DESCRIPTION}" class="form-label">
+    <div class="input-group">
+      <label for="${prefix}-${ELEMENTS.DESCRIPTION}">
         ${TranslationManager.localize(translations, 'modal.description', undefined, 'Description')}
       </label>
       <input type="text" id="${prefix}-${ELEMENTS.DESCRIPTION}" placeholder="${TranslationManager.localize(
@@ -14,6 +14,6 @@ export function itemDescription(prefix: string, translations: TranslationData): 
         undefined,
         'Item description',
       )}" />
-    </div> 
+    </div>
   `;
 }

@@ -55,17 +55,20 @@ export const itemRowStyles: CSSResult = css`
   }
 
   .item-main {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto;
+    column-gap: 10px;
+    row-gap: 6px;
     min-width: 0;
   }
 
-  .item-title-row {
+  .item-name-row {
     display: flex;
     align-items: center;
-    gap: 8px;
     min-width: 0;
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .item-name {
@@ -76,6 +79,7 @@ export const itemRowStyles: CSSResult = css`
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 1;
+    line-height: 1.1;
   }
 
   .item-badge {
@@ -95,6 +99,38 @@ export const itemRowStyles: CSSResult = css`
     line-height: 1;
     height: 18px;
     min-width: 52px;
+    align-self: center;
+    width: 80px;
+  }
+
+  .item-badges {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    min-height: 40px;
+    gap: 2px;
+  }
+
+  .item-badge-slot {
+    min-height: 18px;
+    display: flex;
+    align-items: center;
+    width: 80px;
+    justify-content: flex-end;
+  }
+
+  .item-badge--location {
+    min-width: 0;
+    padding: 2px 8px;
+    background: rgba(60, 176, 255, 0.15);
+    color: #6cc0ff;
+    border: 1px solid rgba(60, 176, 255, 0.35);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 0.7em;
   }
 
   .item-subline {
@@ -104,6 +140,8 @@ export const itemRowStyles: CSSResult = css`
     gap: 6px;
     color: rgba(255, 255, 255, 0.6);
     font-size: 0.85em;
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .item-meta-tag {
@@ -125,6 +163,8 @@ export const itemRowStyles: CSSResult = css`
     gap: 8px;
     font-size: 0.75em;
     color: rgba(255, 255, 255, 0.6);
+    grid-column: 1 / -1;
+    grid-row: 3;
   }
 
   .item-pill {

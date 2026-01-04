@@ -10,7 +10,7 @@ export function itemLocation(
 ): string {
   return `
     <div class="input-group">
-      <label for="${prefix}-${ELEMENTS.LOCATION}" class="form-label">
+      <label for="${prefix}-${ELEMENTS.LOCATION}">
         ${TranslationManager.localize(translations, 'modal.location', undefined, 'Location')}
       </label>
       ${createAutoCompleteInput({

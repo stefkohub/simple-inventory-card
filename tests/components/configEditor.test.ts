@@ -73,6 +73,7 @@ describe('ConfigEditor', () => {
       configEditor.setConfig(inputConfig);
 
       expect(configEditor['_config']).toEqual({
+        custom_name: '',
         show_header: true,
         show_add_button: false,
         use_light_add_modal: false,
@@ -98,6 +99,7 @@ describe('ConfigEditor', () => {
       configEditor.setConfig(newConfig);
 
       expect(configEditor['_config']).toEqual({
+        custom_name: '',
         show_header: true,
         show_add_button: false,
         use_light_add_modal: false,

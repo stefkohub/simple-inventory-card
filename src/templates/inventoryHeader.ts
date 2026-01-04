@@ -9,6 +9,7 @@ export function createInventoryHeader(
   allItems: InventoryItem[],
   translations: TranslationData,
   description?: string,
+  showDescription: boolean = true,
 ): string {
   const expiringCount = getExpiringItemsCount(allItems);
   const expiredCount = getExpiredItemsCount(allItems);
@@ -18,7 +19,7 @@ export function createInventoryHeader(
         <div class="header-content">
           <h2 class="inventory-title">${Utilities.sanitizeHtml(inventoryName)}</h2>
           ${
-            description && description.trim()
+            showDescription && description && description.trim()
               ? `<p class="inventory-description">${Utilities.sanitizeHtml(description)}</p>`
               : ''
           }

@@ -32,6 +32,32 @@ export function createEntitySelector(
   `;
 }
 
+export function createCustomNameInput(
+  customName: string,
+  onValueChanged: (event_: Event) => void,
+  translations: TranslationData,
+): TemplateResult {
+  return html`
+    <div class="option">
+      <div class="row">
+        <div class="col">
+          <ha-textfield
+            .label=${TranslationManager.localize(
+              translations,
+              'config.custom_name',
+              undefined,
+              'Custom Inventory Title',
+            )}
+            .value=${customName}
+            @input=${onValueChanged}
+            @change=${onValueChanged}
+          ></ha-textfield>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 export function createEntityInfo(
   hass: HomeAssistant,
   entityId: string,
@@ -219,6 +245,33 @@ export function createTransparentCardToggle(
               'config.transparent_card',
               undefined,
               'Transparent Card Background',
+            )}
+          </label>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+export function createDescriptionToggle(
+  showDescription: boolean,
+  onToggleChanged: (event_: CustomEvent) => void,
+  translations: TranslationData,
+): TemplateResult {
+  return html`
+    <div class="option">
+      <div class="row">
+        <div class="col">
+          <ha-switch
+            .checked=${showDescription}
+            @change=${onToggleChanged}
+          ></ha-switch>
+          <label>
+            ${TranslationManager.localize(
+              translations,
+              'config.show_description',
+              undefined,
+              'Show Inventory Description',
             )}
           </label>
         </div>

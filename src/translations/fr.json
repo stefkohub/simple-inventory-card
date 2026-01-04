@@ -115,7 +115,9 @@
     "show_add_button": "Afficher le bouton d'ajout",
     "light_add_modal": "Utiliser le popup léger pour ajouter",
     "light_edit_modal": "Utiliser le popup léger pour modifier",
-    "transparent_card": "Fond de carte transparent"
+    "transparent_card": "Fond de carte transparent",
+    "show_description": "Afficher la description de l'inventaire",
+    "custom_name": "Titre personnalisé de l'inventaire"
   },
   "categories": {
     "title": "Catégories",

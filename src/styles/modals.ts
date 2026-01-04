@@ -98,6 +98,42 @@ export const modalStyles: CSSResult = css`
   .modal--light .form-row {
     gap: 12px;
     margin-bottom: 12px;
+    align-items: stretch;
+  }
+
+  .modal--light .input-group {
+    min-width: 0;
+  }
+
+
+  .modal--light input:not([type='checkbox']),
+  .modal--light select {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.9);
+    height: 44px;
+    box-sizing: border-box;
+  }
+
+  .modal--light .autocomplete-container {
+    width: 100%;
+  }
+
+  .modal--light .autocomplete-container input {
+    width: 100%;
+    height: 44px;
+    box-sizing: border-box;
+    padding-right: 44px;
+  }
+
+  .modal--light .autocomplete-container input::placeholder {
+    line-height: 20px;
+  }
+
+  .modal--light .checkbox-label {
+    align-items: center;
   }
 
   .modal-advanced {
@@ -124,14 +160,14 @@ export const modalStyles: CSSResult = css`
 
   .modal-advanced .advanced-icon {
     display: inline-flex;
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.08);
     color: rgba(255, 255, 255, 0.8);
-    font-size: 0.85em;
+    font-size: 1.1em;
     transition: transform 0.2s ease;
   }
 

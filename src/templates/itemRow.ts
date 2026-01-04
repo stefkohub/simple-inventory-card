@@ -79,9 +79,6 @@ export function createItemRowTemplate(
     : null;
 
   const metaParts: string[] = [];
-  if (item.location) {
-    metaParts.push(`<span class="item-meta-tag">${item.location}</span>`);
-  }
   if (item.category) {
     metaParts.push(`<span class="item-meta-tag">${item.category}</span>`);
   }
@@ -109,15 +106,26 @@ export function createItemRowTemplate(
     );
   }
 
+  const locationLabel = item.location?.trim();
+  const lastBadge = isLowStock
+    ? `<span class="item-badge item-badge--low">${lowStockLabel}</span>`
+    : '';
+  const locationBadge = locationLabel
+    ? `<span class="item-badge item-badge--location">${locationLabel}</span>`
+    : '';
+
   return `
     <div class="item-row ${item.quantity === 0 ? 'zero-quantity' : ''} ${item.auto_add_enabled ? 'auto-add-enabled' : ''} ${isLowStock ? 'item-row--low' : ''}">
       <div class="item-main">
-        <div class="item-title-row">
+        <div class="item-name-row">
           <span class="item-name">${item.name}</span>
-          ${isLowStock ? `<span class="item-badge item-badge--low">${lowStockLabel}</span>` : ''}
         </div>
-        ${metaParts.length > 0 ? `<div class="item-subline">${metaParts.join('<span class="item-meta-sep">•</span>')}</div>` : ''}
-        ${infoBadges.length > 0 ? `<div class="item-info-row">${infoBadges.join('')}</div>` : ''}
+        ${metaParts.length > 0 ? `<div class="item-subline">${metaParts.join('<span class="item-meta-sep">•</span>')}</div>` : '<div class="item-subline"></div>'}
+        ${infoBadges.length > 0 ? `<div class="item-info-row">${infoBadges.join('')}</div>` : '<div class="item-info-row"></div>'}
+        <div class="item-badges">
+          <div class="item-badge-slot item-badge-slot--top">${lastBadge}</div>
+          <div class="item-badge-slot item-badge-slot--bottom">${locationBadge}</div>
+        </div>
       </div>
       <div class="item-qty ${item.quantity === 0 ? 'is-zero' : ''}">
         <span class="qty-value">${item.quantity}</span>

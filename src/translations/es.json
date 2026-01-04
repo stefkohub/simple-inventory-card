@@ -115,7 +115,9 @@
     "show_add_button": "Mostrar botón de añadir",
     "light_add_modal": "Usar popup ligero para añadir",
     "light_edit_modal": "Usar popup ligero para editar",
-    "transparent_card": "Fondo de tarjeta transparente"
+    "transparent_card": "Fondo de tarjeta transparente",
+    "show_description": "Mostrar descripción del inventario",
+    "custom_name": "Título personalizado del inventario"
   },
   "categories": {
     "title": "Categorías",
