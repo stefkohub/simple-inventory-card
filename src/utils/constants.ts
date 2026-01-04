@@ -87,6 +87,7 @@ export const ACTIONS = {
   INCREMENT: 'increment',
   OPEN_EDIT_MODAL: 'open_edit',
   REMOVE: 'remove',
+  TOGGLE_CATEGORY: 'toggle_category',
 };
 
 export const DEFAULTS = {
@@ -137,6 +138,7 @@ export const FILTER_VALUES = {
 
 export const STORAGE_KEYS = {
   FILTERS: (entity: string) => `simple_inventory_filters_${entity}`,
+  COLLAPSED_CATEGORIES: (entity: string) => `simple_inventory_collapsed_categories_${entity}`,
 };
 
 export const TIMING = {

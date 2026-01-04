@@ -40,6 +40,7 @@
   },
   "modal": {
     "add_item": "Ajouter un article",
+    "advanced": "Avancé",
     "auto_add_id_to_description": "Ajouter l’identifiant de l’inventaire à la description de l’article",
     "auto_add_settings": "Paramètres d'ajout automatique",
     "auto_add_when_low": "Ajout automatique à la liste de tâches quand faible",
@@ -111,10 +112,15 @@
     "select_entity_message": "Veuillez sélectionner une entité d'inventaire ci-dessus",
     "selected_inventory": "Inventaire sélectionné :",
     "show_header": "Afficher titre et sous-titre",
-    "show_add_button": "Afficher le bouton d'ajout"
+    "show_add_button": "Afficher le bouton d'ajout",
+    "light_add_modal": "Utiliser le popup léger pour ajouter",
+    "light_edit_modal": "Utiliser le popup léger pour modifier",
+    "transparent_card": "Fond de carte transparent"
   },
   "categories": {
-    "title": "Catégories"
+    "title": "Catégories",
+    "collapse": "Masquer la catégorie",
+    "expand": "Afficher la catégorie"
   },
   "actions": {
     "confirm_remove": "Retirer {name} de l'inventaire ?"

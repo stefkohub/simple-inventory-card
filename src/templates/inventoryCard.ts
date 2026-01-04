@@ -24,12 +24,15 @@ export function generateCardHTML(
   description: string | undefined,
   translations: TranslationData,
   config: InventoryConfig,
+  collapsedCategories: string[] = [],
 ): string {
   const showHeader = config.show_header ?? true;
   const showAddButton = config.show_add_button === true;
   const showSearch = config.show_search == true; // Default false
   const showSort = config.show_sort == true; // Default false
   const showAutoAddInfo = config.show_auto_add_info == true; // Default false
+  const addModalVariant = config.use_light_add_modal ? 'light' : 'default';
+  const editModalVariant = config.use_light_edit_modal ? 'light' : 'default';
   const categoryCounts = allItems.reduce<Record<string, number>>((counts, item) => {
     const category = item.category?.trim() || 'Uncategorized';
     counts[category] = (counts[category] || 0) + 1;
@@ -50,7 +53,7 @@ export function generateCardHTML(
 
   return `
     <style>${styles}</style>
-    <ha-card>
+    <ha-card class="${config.transparent_card ? 'card--transparent' : ''}">
       <div class="category-bar">
         <span class="category-label">${TranslationManager.localize(
           translations,
@@ -108,13 +111,20 @@ export function generateCardHTML(
       <div class="items-container">
         ${
           items.length > 0
-            ? createItemsList(items, sortMethod, todoLists, translations, showAutoAddInfo)
+            ? createItemsList(
+                items,
+                sortMethod,
+                todoLists,
+                translations,
+                showAutoAddInfo,
+                collapsedCategories,
+              )
             : `<div class="empty-state">${TranslationManager.localize(translations, 'items.no_items', undefined, 'No items in inventory')}</div>`
         }
       </div>
 
-      ${createAddModal(todoLists, translations, categories, locations)}
-      ${createEditModal(todoLists, translations, categories, locations)}
+      ${createAddModal(todoLists, translations, categories, locations, addModalVariant)}
+      ${createEditModal(todoLists, translations, categories, locations, editModalVariant)}
     </ha-card>
   `;
 }

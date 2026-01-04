@@ -68,4 +68,102 @@ export const modalStyles: CSSResult = css`
     cursor: pointer;
     transition: all 0.2s ease;
   }
+
+  .modal--light .modal-content {
+    background: rgba(28, 28, 28, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 24px;
+    border-radius: 18px;
+    max-width: 520px;
+  }
+
+  .modal--light .modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+  }
+
+  .modal--light .modal-title {
+    font-size: 1.15em;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .modal--light .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .modal--light .form-row {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .modal-advanced {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .modal-advanced summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+  }
+
+  .modal-advanced summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .modal-advanced .advanced-icon {
+    display: inline-flex;
+    width: 28px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85em;
+    transition: transform 0.2s ease;
+  }
+
+  .modal-advanced[open] .advanced-icon {
+    transform: rotate(180deg);
+  }
+
+  .modal-advanced-content {
+    padding: 0 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .modal-buttons--light {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .modal-buttons--light .modal-primary {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.85);
+    border-radius: 14px;
+  }
+
+  .modal-buttons--light .modal-secondary {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 14px;
+  }
 `;

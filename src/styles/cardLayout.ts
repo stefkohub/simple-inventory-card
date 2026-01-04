@@ -10,6 +10,13 @@ export const cardLayoutStyles: CSSResult = css`
       inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
+  ha-card.card--transparent {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    padding: 12px;
+  }
+
   .inventory-title {
     margin: 0;
     font-size: 1.3em;
@@ -82,7 +89,7 @@ export const cardLayoutStyles: CSSResult = css`
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 8px 4px 12px;
+    padding: 6px 4px 6px;
     color: rgba(255, 255, 255, 0.65);
     font-size: 0.85em;
     letter-spacing: 0.2em;

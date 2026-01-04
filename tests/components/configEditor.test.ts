@@ -72,7 +72,14 @@ describe('ConfigEditor', () => {
 
       configEditor.setConfig(inputConfig);
 
-      expect(configEditor['_config']).toEqual(inputConfig);
+      expect(configEditor['_config']).toEqual({
+        show_header: true,
+        show_add_button: false,
+        use_light_add_modal: false,
+        use_light_edit_modal: false,
+        transparent_card: false,
+        ...inputConfig,
+      });
       expect(configEditor['_config']).not.toBe(inputConfig); // Should be a copy
     });
 
@@ -90,7 +97,14 @@ describe('ConfigEditor', () => {
       configEditor.setConfig(initialConfig);
       configEditor.setConfig(newConfig);
 
-      expect(configEditor['_config']).toEqual(newConfig);
+      expect(configEditor['_config']).toEqual({
+        show_header: true,
+        show_add_button: false,
+        use_light_add_modal: false,
+        use_light_edit_modal: false,
+        transparent_card: false,
+        ...newConfig,
+      });
     });
   });
 

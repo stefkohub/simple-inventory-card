@@ -57,6 +57,7 @@ describe('RenderingCoordinator', () => {
     mockServices = {
       filters: {
         getCurrentFilters: vi.fn(),
+        getCollapsedCategories: vi.fn().mockReturnValue([]),
         filterItems: vi.fn(),
         sortItems: vi.fn(),
         updateFilterIndicators: vi.fn(),
@@ -242,6 +243,7 @@ describe('RenderingCoordinator', () => {
         mockTodoLists,
         mockTranslations,
         mockConfig,
+        [],
       );
       expect(mockServices.eventHandler.setupEventListeners).toHaveBeenCalled();
       expect(mockServices.filters.updateFilterIndicators).toHaveBeenCalled();
@@ -268,6 +270,7 @@ describe('RenderingCoordinator', () => {
         mockTodoLists,
         mockTranslations,
         mockConfig,
+        [],
       );
     });
 

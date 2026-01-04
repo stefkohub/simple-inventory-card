@@ -58,6 +58,7 @@ export class RenderingCoordinator {
 
       const currentFilters = filters.getCurrentFilters(entityId);
       const sortMethod = currentFilters.sortMethod || DEFAULTS.SORT_METHOD;
+      const collapsedCategories = filters.getCollapsedCategories(entityId);
       const allItems = validateItemsCallback(state.attributes?.items || []);
       const filteredItems = filters.filterItems(allItems, currentFilters);
       const sortedItems = filters.sortItems(filteredItems, sortMethod, translations);
@@ -71,6 +72,7 @@ export class RenderingCoordinator {
         todoLists,
         translations,
         config,
+        collapsedCategories,
       );
 
       eventHandler.setupEventListeners();

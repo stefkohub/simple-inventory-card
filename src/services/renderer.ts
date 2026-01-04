@@ -19,6 +19,7 @@ export class Renderer {
     todoLists: TodoList[],
     translations: TranslationData,
     config: InventoryConfig,
+    collapsedCategories: string[] = [],
   ): void {
     const inventoryName = Utilities.getInventoryName(state, entityId);
     const description = Utilities.getInventoryDescription(state);
@@ -46,6 +47,7 @@ export class Renderer {
       description,
       translations,
       config,
+      collapsedCategories,
     );
   }
 

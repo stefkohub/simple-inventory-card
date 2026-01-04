@@ -12,6 +12,7 @@ export function createItemsList(
   todoLists: TodoList[],
   translations: TranslationData,
   showAutoAddInfo: boolean = true,
+  collapsedCategories: string[] = [],
 ): string {
   if (items.length === 0) {
     const noItemsMessage = TranslationManager.localize(
@@ -24,7 +25,13 @@ export function createItemsList(
   }
 
   if (sortMethod === 'category') {
-    return createItemsByCategory(items, todoLists, translations, showAutoAddInfo);
+    return createItemsByCategory(
+      items,
+      todoLists,
+      translations,
+      showAutoAddInfo,
+      collapsedCategories,
+    );
   }
 
   if (sortMethod === 'location') {
@@ -39,6 +46,7 @@ export function createItemsByCategory(
   todoLists: TodoList[],
   translations: TranslationData,
   showAutoAddInfo: boolean = true,
+  collapsedCategories: string[] = [],
 ): string {
   const grouped = Utilities.groupItemsByCategory(items);
   const sortedCategories = Object.keys(grouped).sort();
@@ -46,15 +54,24 @@ export function createItemsByCategory(
   return sortedCategories
     .map(
       (category) => {
+        const isCollapsed = collapsedCategories.includes(category);
         // Sort items alphabetically within each category
         const sortedItems = grouped[category].sort((a, b) => a.name.localeCompare(b.name));
         const itemCount = sortedItems.length;
 
         return `
-        <div class="${CSS_CLASSES.CATEGORY_GROUP}">
+        <div class="${CSS_CLASSES.CATEGORY_GROUP} ${isCollapsed ? 'is-collapsed' : ''}">
           <div class="${CSS_CLASSES.CATEGORY_HEADER}">
+            <button class="category-toggle" data-action="toggle_category" data-category="${category}" title="${TranslationManager.localize(
+              translations,
+              isCollapsed ? 'categories.expand' : 'categories.collapse',
+              undefined,
+              isCollapsed ? 'Show category' : 'Hide category',
+            )}">
+              ${isCollapsed ? '▸' : '▾'}
+            </button>
             <span class="category-name">${category}</span>
-            <span class="category-count">${itemCount} ${TranslationManager.localize(translations, 'items.count', undefined, 'item')}${itemCount !== 1 ? 's' : ''}</span>
+            <span class="category-count">${itemCount}</span>
           </div>
           ${sortedItems.map((item) => createItemRowTemplate(item, todoLists, translations, showAutoAddInfo)).join('')}
         </div>

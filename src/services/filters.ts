@@ -68,6 +68,31 @@ export class Filters {
     localStorage.removeItem(STORAGE_KEYS.FILTERS(entityId));
   }
 
+  getCollapsedCategories(entityId: string): string[] {
+    const saved = localStorage.getItem(STORAGE_KEYS.COLLAPSED_CATEGORIES(entityId));
+    if (!saved) {
+      return [];
+    }
+    try {
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      console.error('Error parsing collapsed categories:', error);
+      return [];
+    }
+  }
+
+  toggleCategoryCollapse(entityId: string, category: string): string[] {
+    const current = this.getCollapsedCategories(entityId);
+    const exists = current.includes(category);
+    const updated = exists ? current.filter((entry) => entry !== category) : [...current, category];
+    localStorage.setItem(
+      STORAGE_KEYS.COLLAPSED_CATEGORIES(entityId),
+      JSON.stringify(updated),
+    );
+    return updated;
+  }
+
   filterItems(items: readonly InventoryItem[], filters: FilterState): InventoryItem[] {
     if (!filters || Object.keys(filters).length === 0) {
       return [...items];

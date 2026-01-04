@@ -40,6 +40,7 @@
   },
   "modal": {
     "add_item": "Aggiungi oggetto",
+    "advanced": "Avanzate",
     "auto_add_id_to_description": "Aggiungi l’ID dell’inventario alla descrizione dell’articolo",
     "auto_add_settings": "Impostazioni auto-aggiunta",
     "auto_add_when_low": "Aggiungi alla lista attività quando la quantità è bassa",
@@ -111,10 +112,15 @@
     "select_entity_message": "Seleziona un’entità inventario sopra",
     "selected_inventory": "Inventario selezionato:",
     "show_header": "Mostra titolo e sottotitolo",
-    "show_add_button": "Mostra pulsante aggiungi"
+    "show_add_button": "Mostra pulsante aggiungi",
+    "light_add_modal": "Usa popup leggero per aggiungere",
+    "light_edit_modal": "Usa popup leggero per modificare",
+    "transparent_card": "Sfondo card trasparente"
   },
   "categories": {
-    "title": "Categorie"
+    "title": "Categorie",
+    "collapse": "Nascondi categoria",
+    "expand": "Mostra categoria"
   },
   "actions": {
     "confirm_remove": "Rimuovere {name} dall’inventario?"

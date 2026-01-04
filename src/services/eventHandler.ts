@@ -109,6 +109,14 @@ export class EventHandler {
       return;
     }
 
+    const category = button?.dataset.category;
+    if (action === ACTIONS.TOGGLE_CATEGORY && category) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.handleCategoryToggle(category);
+      return;
+    }
+
     // Handle modal clicks first (let modals handle their own logic)
     if (this.modals.handleModalClick(event as MouseEvent)) {
       return; // Don't prevent default - let modals handle it
@@ -359,6 +367,11 @@ export class EventHandler {
       );
       alert(errorMessage);
     }
+  }
+
+  private handleCategoryToggle(category: string): void {
+    this.filters.toggleCategoryCollapse(this.config.entity, category);
+    this.renderCallback();
   }
 
   private getUniqueLocations(): string[] {

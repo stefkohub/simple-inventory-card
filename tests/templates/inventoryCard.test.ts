@@ -642,18 +642,21 @@ describe('generateCardHTML', () => {
         mockTodoLists,
         mockTranslations,
         true,
+        [],
       );
       expect(modalTemplatesModule.createAddModal).toHaveBeenCalledWith(
         mockTodoLists,
         mockTranslations,
         mockCategories,
         mockLocations,
+        'default',
       );
       expect(modalTemplatesModule.createEditModal).toHaveBeenCalledWith(
         mockTodoLists,
         mockTranslations,
         mockCategories,
         mockLocations,
+        'default',
       );
     });
   });

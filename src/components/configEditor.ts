@@ -8,6 +8,9 @@ import {
   createDebugToggle,
   createHeaderToggle,
   createAddButtonToggle,
+  createAddModalVariantToggle,
+  createEditModalVariantToggle,
+  createTransparentCardToggle,
 } from '../templates/configEditor';
 import { configEditorStyles } from '../styles/configEditor';
 import { TranslationData } from '@/types/translatableComponent';
@@ -20,7 +23,6 @@ class ConfigEditor extends LitElement {
 
   constructor() {
     super();
-    this._config = { entity: '', type: '' };
   }
 
   static get properties() {
@@ -59,7 +61,19 @@ class ConfigEditor extends LitElement {
   }
 
   setConfig(config: InventoryConfig): void {
-    this._config = { ...config };
+    const nextConfig: InventoryConfig = {
+      show_header: true,
+      show_add_button: false,
+      use_light_add_modal: false,
+      use_light_edit_modal: false,
+      transparent_card: false,
+      ...config,
+    };
+    if (!nextConfig.type) {
+      nextConfig.type = 'custom:simple-inventory-card';
+    }
+    this._config = nextConfig;
+    this.requestUpdate();
   }
 
   get _entity(): string {
@@ -78,6 +92,18 @@ class ConfigEditor extends LitElement {
     return this._config?.show_add_button ?? false;
   }
 
+  get _useLightAddModal(): boolean {
+    return this._config?.use_light_add_modal ?? false;
+  }
+
+  get _useLightEditModal(): boolean {
+    return this._config?.use_light_edit_modal ?? false;
+  }
+
+  get _transparentCard(): boolean {
+    return this._config?.transparent_card ?? false;
+  }
+
   render(): TemplateResult {
     if (!this.hass || !this._config) {
       return html`<div>
@@ -93,14 +119,17 @@ class ConfigEditor extends LitElement {
     const entityOptions = Utilities.createEntityOptions(this.hass, inventoryEntities);
 
     if (!this._config.entity && inventoryEntities.length > 0) {
-      if (!this._config.type) {
-        this._config.type = 'custom:simple-inventory-card';
-      }
+      const config: InventoryConfig = {
+        ...this._config,
+        type: this._config.type || 'custom:simple-inventory-card',
+        entity: inventoryEntities[0],
+      };
 
-      this._config.entity = inventoryEntities[0];
+      this._config = config;
+
       this.dispatchEvent(
         new CustomEvent('config-changed', {
-          detail: { config: this._config },
+          detail: { config },
           bubbles: true,
           composed: true,
         }),
@@ -129,6 +158,21 @@ class ConfigEditor extends LitElement {
         ${createAddButtonToggle(
           this._showAddButton,
           this._addButtonChanged.bind(this),
+          this._translations,
+        )}
+        ${createAddModalVariantToggle(
+          this._useLightAddModal,
+          this._addModalVariantChanged.bind(this),
+          this._translations,
+        )}
+        ${createEditModalVariantToggle(
+          this._useLightEditModal,
+          this._editModalVariantChanged.bind(this),
+          this._translations,
+        )}
+        ${createTransparentCardToggle(
+          this._transparentCard,
+          this._transparentCardChanged.bind(this),
           this._translations,
         )}
         ${this._entity
@@ -168,12 +212,27 @@ class ConfigEditor extends LitElement {
     );
   }
 
+  private _getCheckedValue(event_: Event): boolean | undefined {
+    const target = event_.target as HTMLInputElement | null;
+    if (target && typeof target.checked === 'boolean') {
+      return target.checked;
+    }
+    const currentTarget = event_.currentTarget as HTMLInputElement | null;
+    if (currentTarget && typeof currentTarget.checked === 'boolean') {
+      return currentTarget.checked;
+    }
+    return (event_ as CustomEvent).detail?.checked;
+  }
+
   private _debugChanged(event_: CustomEvent): void {
     if (!this._config) {
       return;
     }
 
-    const value = event_.detail?.checked;
+    const value = this._getCheckedValue(event_);
+    if (value === undefined) {
+      return;
+    }
 
     if (this._debug === value) {
       return;
@@ -202,7 +261,10 @@ class ConfigEditor extends LitElement {
       return;
     }
 
-    const value = event_.detail?.checked;
+    const value = this._getCheckedValue(event_);
+    if (value === undefined) {
+      return;
+    }
 
     if (this._showHeader === value) {
       return;
@@ -231,7 +293,10 @@ class ConfigEditor extends LitElement {
       return;
     }
 
-    const value = event_.detail?.checked;
+    const value = this._getCheckedValue(event_);
+    if (value === undefined) {
+      return;
+    }
 
     if (this._showAddButton === value) {
       return;
@@ -240,6 +305,102 @@ class ConfigEditor extends LitElement {
     const config: InventoryConfig = {
       ...this._config,
       show_add_button: value,
+    };
+
+    this._config = config;
+
+    this.requestUpdate();
+
+    this.dispatchEvent(
+      new CustomEvent('config-changed', {
+        detail: { config: config },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
+  private _addModalVariantChanged(event_: CustomEvent): void {
+    if (!this._config) {
+      return;
+    }
+
+    const value = this._getCheckedValue(event_);
+    if (value === undefined) {
+      return;
+    }
+
+    if (this._useLightAddModal === value) {
+      return;
+    }
+
+    const config: InventoryConfig = {
+      ...this._config,
+      use_light_add_modal: value,
+    };
+
+    this._config = config;
+
+    this.requestUpdate();
+
+    this.dispatchEvent(
+      new CustomEvent('config-changed', {
+        detail: { config: config },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
+  private _editModalVariantChanged(event_: CustomEvent): void {
+    if (!this._config) {
+      return;
+    }
+
+    const value = this._getCheckedValue(event_);
+    if (value === undefined) {
+      return;
+    }
+
+    if (this._useLightEditModal === value) {
+      return;
+    }
+
+    const config: InventoryConfig = {
+      ...this._config,
+      use_light_edit_modal: value,
+    };
+
+    this._config = config;
+
+    this.requestUpdate();
+
+    this.dispatchEvent(
+      new CustomEvent('config-changed', {
+        detail: { config: config },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
+  private _transparentCardChanged(event_: CustomEvent): void {
+    if (!this._config) {
+      return;
+    }
+
+    const value = this._getCheckedValue(event_);
+    if (value === undefined) {
+      return;
+    }
+
+    if (this._transparentCard === value) {
+      return;
+    }
+
+    const config: InventoryConfig = {
+      ...this._config,
+      transparent_card: value as boolean,
     };
 
     this._config = config;

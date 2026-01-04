@@ -72,30 +72,94 @@ export function createUnifiedModal(
   `;
 }
 
+function createLightModal(
+  todoLists: TodoList[],
+  config: ModalConfig,
+  translations: TranslationData,
+  categories: string[] = [],
+  locations: string[] = [],
+): string {
+  const prefix = config.id === ELEMENTS.ADD_MODAL ? 'add' : 'edit';
+
+  return `
+    <div id="${config.id}" class="modal modal--light">
+      <div class="modal-content modal-content--light">
+        ${modalHeader(config)}
+
+        <div class="modal-body modal-body--light">
+          <div id="${prefix}-validation-message" class="validation-message">
+            <span class="validation-text"></span>
+          </div>
+
+          ${itemName(prefix, translations)}
+          <div class="form-row">
+            ${itemQuantity(prefix, translations)}
+            ${itemCategory(prefix, translations, categories)}
+          </div>
+          ${itemExpiryDate(prefix, translations)}
+
+          <details class="modal-advanced">
+            <summary>
+              <span class="advanced-title">${TranslationManager.localize(
+                translations,
+                'modal.advanced',
+                undefined,
+                'Advanced',
+              )}</span>
+              <span class="advanced-icon">⌄</span>
+            </summary>
+            <div class="modal-advanced-content">
+              ${expiryAlertDays(prefix, translations)}
+              <div class="form-row">
+                ${itemLocation(prefix, translations, locations)}
+                ${itemUnit(prefix, translations)}
+              </div>
+              ${itemDescription(prefix, translations)}
+              ${autoAddIdCheckbox(prefix, translations)}
+              <div class="form-group auto-add-section">
+                ${autoAddCheckbox(prefix, translations)}
+                ${autoAddControls(prefix, todoLists, translations)}
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <div class="modal-buttons modal-buttons--light">
+          <button ${config.primaryButtonId ? `id="${config.primaryButtonId}"` : ''} class="save-btn modal-primary">
+            ${config.primaryButtonText}
+          </button>
+          <button class="cancel-btn modal-secondary" ${config.closeAction ? `data-action="${config.closeAction}"` : ''}>
+            ${TranslationManager.localize(translations, 'modal.cancel', undefined, 'Cancel')}
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 export function createAddModal(
   todoLists: TodoList[],
   translations: TranslationData,
   categories: string[],
   locations: string[],
+  variant: 'default' | 'light' = 'default',
 ): string {
-  return createUnifiedModal(
-    todoLists,
-    {
-      id: ELEMENTS.ADD_MODAL,
-      title: TranslationManager.localize(translations, 'modal.add_item', undefined, 'Add Item'),
-      primaryButtonText: TranslationManager.localize(
-        translations,
-        'modal.add_item',
-        undefined,
-        'Add Item',
-      ),
-      primaryButtonId: ELEMENTS.ADD_ITEM_BTN,
-      closeAction: ACTIONS.CLOSE_ADD_MODAL,
-    },
-    translations,
-    categories,
-    locations,
-  );
+  const config = {
+    id: ELEMENTS.ADD_MODAL,
+    title: TranslationManager.localize(translations, 'modal.add_item', undefined, 'Add Item'),
+    primaryButtonText: TranslationManager.localize(
+      translations,
+      'modal.add_item',
+      undefined,
+      'Add Item',
+    ),
+    primaryButtonId: ELEMENTS.ADD_ITEM_BTN,
+    closeAction: ACTIONS.CLOSE_ADD_MODAL,
+  };
+
+  return variant === 'light'
+    ? createLightModal(todoLists, config, translations, categories, locations)
+    : createUnifiedModal(todoLists, config, translations, categories, locations);
 }
 
 export function createEditModal(
@@ -103,21 +167,20 @@ export function createEditModal(
   translations: TranslationData,
   categories: string[],
   locations: string[],
+  variant: 'default' | 'light' = 'default',
 ): string {
-  return createUnifiedModal(
-    todoLists,
-    {
-      id: ELEMENTS.EDIT_MODAL,
-      title: TranslationManager.localize(translations, 'modal.edit_item', undefined, 'Edit Item'),
-      primaryButtonText: TranslationManager.localize(
-        translations,
-        'modal.save_changes',
-        undefined,
-        'Save Changes',
-      ),
-    },
-    translations,
-    categories,
-    locations,
-  );
+  const config = {
+    id: ELEMENTS.EDIT_MODAL,
+    title: TranslationManager.localize(translations, 'modal.edit_item', undefined, 'Edit Item'),
+    primaryButtonText: TranslationManager.localize(
+      translations,
+      'modal.save_changes',
+      undefined,
+      'Save Changes',
+    ),
+  };
+
+  return variant === 'light'
+    ? createLightModal(todoLists, config, translations, categories, locations)
+    : createUnifiedModal(todoLists, config, translations, categories, locations);
 }

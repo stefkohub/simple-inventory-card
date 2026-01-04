@@ -79,6 +79,9 @@ export const itemRowStyles: CSSResult = css`
   }
 
   .item-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 2px 8px;
     border-radius: 999px;
     font-size: 0.62em;
@@ -89,6 +92,9 @@ export const itemRowStyles: CSSResult = css`
     color: #ffb248;
     border: 1px solid rgba(255, 166, 49, 0.35);
     white-space: nowrap;
+    line-height: 1;
+    height: 18px;
+    min-width: 52px;
   }
 
   .item-subline {
@@ -206,7 +212,7 @@ export const itemRowStyles: CSSResult = css`
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.55);
-    margin: 12px 0;
+    margin: 8px 0 6px;
     padding: 6px 0;
     background: transparent;
     border-radius: 0;
@@ -215,6 +221,32 @@ export const itemRowStyles: CSSResult = css`
     justify-content: center;
     align-items: center;
     box-shadow: none;
+    position: relative;
+  }
+
+  .category-toggle {
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.4em;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    position: absolute;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .category-toggle:hover {
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .category-group.is-collapsed .item-row {
+    display: none;
   }
 
   .category-name {
@@ -227,9 +259,9 @@ export const itemRowStyles: CSSResult = css`
     color: rgba(255, 255, 255, 0.5);
     font-weight: 600;
     background: transparent;
-    padding: 2px 8px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0;
+    border-radius: 0;
+    border: none;
     min-width: 20px;
     text-align: center;
   }

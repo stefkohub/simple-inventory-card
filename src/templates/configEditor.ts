@@ -146,6 +146,87 @@ export function createAddButtonToggle(
   `;
 }
 
+export function createAddModalVariantToggle(
+  useLightModal: boolean,
+  onVariantChanged: (event_: CustomEvent) => void,
+  translations: TranslationData,
+): TemplateResult {
+  return html`
+    <div class="option">
+      <div class="row">
+        <div class="col">
+          <ha-switch
+            .checked=${useLightModal}
+            @change=${onVariantChanged}
+          ></ha-switch>
+          <label>
+            ${TranslationManager.localize(
+              translations,
+              'config.light_add_modal',
+              undefined,
+              'Use Light Add Popup',
+            )}
+          </label>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+export function createEditModalVariantToggle(
+  useLightModal: boolean,
+  onVariantChanged: (event_: CustomEvent) => void,
+  translations: TranslationData,
+): TemplateResult {
+  return html`
+    <div class="option">
+      <div class="row">
+        <div class="col">
+          <ha-switch
+            .checked=${useLightModal}
+            @change=${onVariantChanged}
+          ></ha-switch>
+          <label>
+            ${TranslationManager.localize(
+              translations,
+              'config.light_edit_modal',
+              undefined,
+              'Use Light Edit Popup',
+            )}
+          </label>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+export function createTransparentCardToggle(
+  transparent: boolean,
+  onToggleChanged: (event_: CustomEvent) => void,
+  translations: TranslationData,
+): TemplateResult {
+  return html`
+    <div class="option">
+      <div class="row">
+        <div class="col">
+          <ha-switch
+            .checked=${transparent}
+            @change=${onToggleChanged}
+          ></ha-switch>
+          <label>
+            ${TranslationManager.localize(
+              translations,
+              'config.transparent_card',
+              undefined,
+              'Transparent Card Background',
+            )}
+          </label>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 export function createNoEntityMessage(translations: TranslationData): TemplateResult {
   return html`
     <div class="no-entity">
