@@ -197,18 +197,21 @@ describe('itemList', () => {
           mockTodoLists,
           mockTranslations,
           true,
+          expect.any(Number),
         );
         expect(vi.mocked(createItemRowTemplate)).toHaveBeenCalledWith(
           mockItems[1],
           mockTodoLists,
           mockTranslations,
           true,
+          expect.any(Number),
         );
         expect(vi.mocked(createItemRowTemplate)).toHaveBeenCalledWith(
           mockItems[2],
           mockTodoLists,
           mockTranslations,
           true,
+          expect.any(Number),
         );
         expect(Utilities.groupItemsByCategory).not.toHaveBeenCalled();
       });
@@ -246,18 +249,21 @@ describe('itemList', () => {
           customTodoLists,
           mockTranslations,
           true,
+          expect.any(Number),
         );
         expect(vi.mocked(createItemRowTemplate)).toHaveBeenCalledWith(
           mockItems[1],
           customTodoLists,
           mockTranslations,
           true,
+          expect.any(Number),
         );
         expect(vi.mocked(createItemRowTemplate)).toHaveBeenCalledWith(
           mockItems[2],
           customTodoLists,
           mockTranslations,
           true,
+          expect.any(Number),
         );
       });
 
@@ -269,6 +275,7 @@ describe('itemList', () => {
           [],
           mockTranslations,
           true,
+          expect.any(Number),
         );
       });
     });
@@ -332,18 +339,21 @@ describe('itemList', () => {
           mockTodoLists,
           mockTranslations,
           true,
+          expect.any(Number),
         );
         expect(vi.mocked(createItemRowTemplate)).toHaveBeenCalledWith(
           mockItems[1],
           mockTodoLists,
           mockTranslations,
           true,
+          expect.any(Number),
         );
         expect(vi.mocked(createItemRowTemplate)).toHaveBeenCalledWith(
           mockItems[2],
           mockTodoLists,
           mockTranslations,
           true,
+          expect.any(Number),
         );
       });
     });

@@ -100,10 +100,7 @@ export function createDebugToggle(
     <div class="option">
       <div class="row">
         <div class="col">
-          <ha-switch
-            .checked=${debug}
-            @change=${onDebugChanged}
-          ></ha-switch>
+          <ha-switch .checked=${debug} @change=${onDebugChanged}></ha-switch>
           <label>
             ${TranslationManager.localize(
               translations,
@@ -127,10 +124,7 @@ export function createHeaderToggle(
     <div class="option">
       <div class="row">
         <div class="col">
-          <ha-switch
-            .checked=${showHeader}
-            @change=${onHeaderChanged}
-          ></ha-switch>
+          <ha-switch .checked=${showHeader} @change=${onHeaderChanged}></ha-switch>
           <label>
             ${TranslationManager.localize(
               translations,
@@ -154,10 +148,7 @@ export function createAddButtonToggle(
     <div class="option">
       <div class="row">
         <div class="col">
-          <ha-switch
-            .checked=${showAddButton}
-            @change=${onAddButtonChanged}
-          ></ha-switch>
+          <ha-switch .checked=${showAddButton} @change=${onAddButtonChanged}></ha-switch>
           <label>
             ${TranslationManager.localize(
               translations,
@@ -181,10 +172,7 @@ export function createAddModalVariantToggle(
     <div class="option">
       <div class="row">
         <div class="col">
-          <ha-switch
-            .checked=${useLightModal}
-            @change=${onVariantChanged}
-          ></ha-switch>
+          <ha-switch .checked=${useLightModal} @change=${onVariantChanged}></ha-switch>
           <label>
             ${TranslationManager.localize(
               translations,
@@ -208,10 +196,7 @@ export function createEditModalVariantToggle(
     <div class="option">
       <div class="row">
         <div class="col">
-          <ha-switch
-            .checked=${useLightModal}
-            @change=${onVariantChanged}
-          ></ha-switch>
+          <ha-switch .checked=${useLightModal} @change=${onVariantChanged}></ha-switch>
           <label>
             ${TranslationManager.localize(
               translations,
@@ -235,10 +220,7 @@ export function createTransparentCardToggle(
     <div class="option">
       <div class="row">
         <div class="col">
-          <ha-switch
-            .checked=${transparent}
-            @change=${onToggleChanged}
-          ></ha-switch>
+          <ha-switch .checked=${transparent} @change=${onToggleChanged}></ha-switch>
           <label>
             ${TranslationManager.localize(
               translations,
@@ -262,10 +244,7 @@ export function createDescriptionToggle(
     <div class="option">
       <div class="row">
         <div class="col">
-          <ha-switch
-            .checked=${showDescription}
-            @change=${onToggleChanged}
-          ></ha-switch>
+          <ha-switch .checked=${showDescription} @change=${onToggleChanged}></ha-switch>
           <label>
             ${TranslationManager.localize(
               translations,
@@ -274,6 +253,35 @@ export function createDescriptionToggle(
               'Show Inventory Description',
             )}
           </label>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+export function createExpiryWarningDaysInput(
+  expiryWarningDays: number,
+  onValueChanged: (event_: Event) => void,
+  translations: TranslationData,
+): TemplateResult {
+  return html`
+    <div class="option">
+      <div class="row">
+        <div class="col">
+          <ha-textfield
+            type="number"
+            min="0"
+            step="1"
+            .label=${TranslationManager.localize(
+              translations,
+              'config.expiry_warning_days',
+              undefined,
+              'Expiry warning days',
+            )}
+            .value=${String(expiryWarningDays)}
+            @input=${onValueChanged}
+            @change=${onValueChanged}
+          ></ha-textfield>
         </div>
       </div>
     </div>

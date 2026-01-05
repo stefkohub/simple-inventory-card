@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export interface CardContext {
   hass: HomeAssistant;
   config: InventoryConfig;
@@ -169,6 +171,7 @@ export interface InventoryConfig extends LovelaceCardConfig {
   use_light_edit_modal?: boolean;
   transparent_card?: boolean;
   show_description?: boolean;
+  expiry_warning_days?: number;
   show_search?: boolean;
   show_sort?: boolean;
   show_auto_add_info?: boolean;

@@ -24,6 +24,7 @@ This fork adds a redesigned layout and several new configuration options:
 - Collapsible category sections (when sorting by category)
 - "Last" low-stock badge and location badges with fixed slots for consistent row height
 - Deterministic location badge colors based on location name
+- Expiry status text beside category with configurable warning threshold
 - Optional compact ("light") add/edit modals with an Advanced collapsible section
 - Optional transparent card background
 - Optional custom title and hideable header/description
@@ -42,6 +43,7 @@ show_add_button: false
 use_light_add_modal: false
 use_light_edit_modal: false
 transparent_card: false
+expiry_warning_days: 7
 show_search: false
 show_sort: false
 show_auto_add_info: false
@@ -56,6 +58,7 @@ show_auto_add_info: false
 | `use_light_add_modal` | boolean | `false` | Use compact add modal with Advanced section |
 | `use_light_edit_modal` | boolean | `false` | Use compact edit modal with Advanced section |
 | `transparent_card` | boolean | `false` | Make the card background transparent |
+| `expiry_warning_days` | number | `7` | Days before expiry to mark items as "expiring soon" in the UI |
 | `show_search` | boolean | `false` | Show search and filter controls |
 | `show_sort` | boolean | `false` | Show sort controls |
 | `show_auto_add_info` | boolean | `false` | Show the auto-add info pill in rows |

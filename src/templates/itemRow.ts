@@ -10,6 +10,7 @@ export function createItemRowTemplate(
   todoLists: TodoList[],
   translations: TranslationData,
   showAutoAddInfo: boolean = true,
+  expiryWarningDays?: number,
 ): string {
   const isLowStock = item.quantity > 0 && item.quantity <= 1;
   const lowStockLabel = TranslationManager.localize(
@@ -49,17 +50,18 @@ export function createItemRowTemplate(
           `Expired ${daysAgo} day${daysAgo !== 1 ? 's' : ''} ago`,
         ),
       };
-    } else if (daysUntilExpiry === 0) {
-      return {
-        class: 'expires-today',
-        label: TranslationManager.localize(
-          translations,
-          'expiry.expires_today',
-          undefined,
-          'Expires today',
-        ),
-      };
     } else if (daysUntilExpiry <= threshold) {
+      if (daysUntilExpiry === 0) {
+        return {
+          class: 'expires-today',
+          label: TranslationManager.localize(
+            translations,
+            'expiry.expires_today',
+            undefined,
+            'Expires today',
+          ),
+        };
+      }
       const key = daysUntilExpiry === 1 ? 'expiry.expires_in_day' : 'expiry.expires_in_days';
       return {
         class: 'expiring-soon',
@@ -75,24 +77,23 @@ export function createItemRowTemplate(
     }
   };
 
-  const expiryInfo = item.expiry_date
-    ? getExpiryStatus(item.expiry_date, item.expiry_alert_days)
-    : null;
+  const expiryThreshold = expiryWarningDays ?? item.expiry_alert_days ?? DEFAULTS.EXPIRY_ALERT_DAYS;
+  const expiryInfo = item.expiry_date ? getExpiryStatus(item.expiry_date, expiryThreshold) : null;
 
   const metaParts: string[] = [];
   if (item.category) {
     metaParts.push(`<span class="item-meta-tag">${item.category}</span>`);
+  }
+  if (expiryInfo) {
+    metaParts.push(
+      `<span class="item-expiry-text item-expiry-text--${expiryInfo.class}"><span class="item-expiry-icon">⏳</span>${expiryInfo.label}</span>`,
+    );
   }
   if (item.description) {
     metaParts.push(`<span class="item-meta-text">${item.description}</span>`);
   }
 
   const infoBadges: string[] = [];
-  if (expiryInfo) {
-    infoBadges.push(
-      `<span class="item-pill expiry ${expiryInfo.class}">${expiryInfo.label}</span>`,
-    );
-  }
   if (item.auto_add_enabled && showAutoAddInfo) {
     infoBadges.push(
       `<span class="item-pill auto-add-info">${TranslationManager.localize(
@@ -116,8 +117,15 @@ export function createItemRowTemplate(
     ? `<span class="item-badge item-badge--location" ${locationStyle}>${locationLabel}</span>`
     : '';
 
+  const expiryRowClass =
+    expiryInfo?.class === 'expired'
+      ? 'item-row--expired'
+      : expiryInfo?.class === 'expiring-soon' || expiryInfo?.class === 'expires-today'
+        ? 'item-row--expiring'
+        : '';
+
   return `
-    <div class="item-row ${item.quantity === 0 ? 'zero-quantity' : ''} ${item.auto_add_enabled ? 'auto-add-enabled' : ''} ${isLowStock ? 'item-row--low' : ''}">
+    <div class="item-row ${item.quantity === 0 ? 'zero-quantity' : ''} ${item.auto_add_enabled ? 'auto-add-enabled' : ''} ${isLowStock ? 'item-row--low' : ''} ${expiryRowClass}">
       <div class="item-main">
         <div class="item-name-row">
           <span class="item-name">${item.name}</span>

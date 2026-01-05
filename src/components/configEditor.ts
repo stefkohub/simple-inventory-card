@@ -13,10 +13,12 @@ import {
   createEditModalVariantToggle,
   createTransparentCardToggle,
   createDescriptionToggle,
+  createExpiryWarningDaysInput,
 } from '../templates/configEditor';
 import { configEditorStyles } from '../styles/configEditor';
 import { TranslationData } from '@/types/translatableComponent';
 import { TranslationManager } from '@/services/translationManager';
+import { DEFAULTS } from '@/utils/constants';
 
 class ConfigEditor extends LitElement {
   public hass?: HomeAssistant;
@@ -71,6 +73,7 @@ class ConfigEditor extends LitElement {
       use_light_edit_modal: false,
       transparent_card: false,
       show_description: true,
+      expiry_warning_days: DEFAULTS.EXPIRY_WARNING_DAYS,
       ...config,
     };
     if (!nextConfig.type) {
@@ -114,6 +117,10 @@ class ConfigEditor extends LitElement {
 
   get _showDescription(): boolean {
     return this._config?.show_description ?? true;
+  }
+
+  get _expiryWarningDays(): number {
+    return this._config?.expiry_warning_days ?? DEFAULTS.EXPIRY_WARNING_DAYS;
   }
 
   render(): TemplateResult {
@@ -162,16 +169,8 @@ class ConfigEditor extends LitElement {
           this._customNameChanged.bind(this),
           this._translations,
         )}
-        ${createDebugToggle(
-          this._debug,
-          this._debugChanged.bind(this),
-          this._translations,
-        )}
-        ${createHeaderToggle(
-          this._showHeader,
-          this._headerChanged.bind(this),
-          this._translations,
-        )}
+        ${createDebugToggle(this._debug, this._debugChanged.bind(this), this._translations)}
+        ${createHeaderToggle(this._showHeader, this._headerChanged.bind(this), this._translations)}
         ${createAddButtonToggle(
           this._showAddButton,
           this._addButtonChanged.bind(this),
@@ -195,6 +194,11 @@ class ConfigEditor extends LitElement {
         ${createDescriptionToggle(
           this._showDescription,
           this._descriptionChanged.bind(this),
+          this._translations,
+        )}
+        ${createExpiryWarningDaysInput(
+          this._expiryWarningDays,
+          this._expiryWarningDaysChanged.bind(this),
           this._translations,
         )}
         ${this._entity
@@ -486,6 +490,43 @@ class ConfigEditor extends LitElement {
     const config: InventoryConfig = {
       ...this._config,
       show_description: value as boolean,
+    };
+
+    this._config = config;
+
+    this.requestUpdate();
+
+    this.dispatchEvent(
+      new CustomEvent('config-changed', {
+        detail: { config: config },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
+  private _expiryWarningDaysChanged(event_: Event): void {
+    if (!this._config) {
+      return;
+    }
+
+    const target = event_.target as HTMLInputElement | null;
+    const currentTarget = event_.currentTarget as HTMLInputElement | null;
+    const rawValue = target?.value ?? currentTarget?.value ?? '';
+    const normalizedValue =
+      rawValue.trim() === '' ? DEFAULTS.EXPIRY_WARNING_DAYS : Number(rawValue);
+
+    if (!Number.isFinite(normalizedValue) || normalizedValue < 0) {
+      return;
+    }
+
+    if (this._expiryWarningDays === normalizedValue) {
+      return;
+    }
+
+    const config: InventoryConfig = {
+      ...this._config,
+      expiry_warning_days: normalizedValue,
     };
 
     this._config = config;

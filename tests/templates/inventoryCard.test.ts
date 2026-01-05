@@ -41,8 +41,16 @@ vi.mock('../../src/templates/modalTemplates', () => ({
 
 vi.mock('../../src/templates/itemList', () => ({
   createItemsList: vi.fn(
-    (items, sortMethod, todoLists, _translations, showAutoAddInfo, collapsedCategories) =>
-      `<mock-items-list items="${items.length}" sort="${sortMethod}" todos="${todoLists.length}" showAutoAdd="${showAutoAddInfo}" collapsed="${collapsedCategories.length}" />`,
+    (
+      items,
+      sortMethod,
+      todoLists,
+      _translations,
+      showAutoAddInfo,
+      collapsedCategories,
+      expiryWarningDays,
+    ) =>
+      `<mock-items-list items="${items.length}" sort="${sortMethod}" todos="${todoLists.length}" showAutoAdd="${showAutoAddInfo}" collapsed="${collapsedCategories.length}" expiryWarningDays="${expiryWarningDays}" />`,
   ),
 }));
 
@@ -649,6 +657,7 @@ describe('generateCardHTML', () => {
         mockTranslations,
         true,
         [],
+        7,
       );
       expect(modalTemplatesModule.createAddModal).toHaveBeenCalledWith(
         mockTodoLists,

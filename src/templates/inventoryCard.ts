@@ -1,4 +1,4 @@
-import { ELEMENTS } from '../utils/constants';
+import { DEFAULTS, ELEMENTS } from '../utils/constants';
 import { createInventoryHeader } from '../templates/inventoryHeader';
 import { createSearchAndFilters } from '../templates/searchAndFilters';
 import { createAddModal, createEditModal } from '../templates/modalTemplates';
@@ -28,9 +28,10 @@ export function generateCardHTML(
 ): string {
   const showHeader = config.show_header ?? true;
   const showAddButton = config.show_add_button === true;
-  const showSearch = config.show_search == true; // Default false
-  const showSort = config.show_sort == true; // Default false
-  const showAutoAddInfo = config.show_auto_add_info == true; // Default false
+  const showSearch = config.show_search === true; // Default false
+  const showSort = config.show_sort === true; // Default false
+  const showAutoAddInfo = config.show_auto_add_info === true; // Default false
+  const expiryWarningDays = config.expiry_warning_days ?? DEFAULTS.EXPIRY_WARNING_DAYS;
   const addModalVariant = config.use_light_add_modal ? 'light' : 'default';
   const editModalVariant = config.use_light_edit_modal ? 'light' : 'default';
   const categoryCounts = allItems.reduce<Record<string, number>>((counts, item) => {
@@ -78,7 +79,9 @@ export function generateCardHTML(
           : ''
       }
 
-      ${showSort ? `
+      ${
+        showSort
+          ? `
       <div class="controls-row">
         <div class="sorting-controls">
           ${createSortOptions(sortMethod, translations)}
@@ -91,7 +94,8 @@ export function generateCardHTML(
             : ''
         }
       </div>
-      ` : `
+      `
+          : `
       <div class="controls-row">
         ${
           showAddButton
@@ -101,13 +105,18 @@ export function generateCardHTML(
             : ''
         }
       </div>
-      `}
+      `
+      }
 
-      ${showSearch ? `
+      ${
+        showSearch
+          ? `
       <div class="search-controls">
         ${createSearchAndFilters(filters, categories, locations, translations)}
       </div>
-      ` : ''}
+      `
+          : ''
+      }
 
       ${createActiveFiltersDisplay(filters, translations)}
 
@@ -121,6 +130,7 @@ export function generateCardHTML(
                 translations,
                 showAutoAddInfo,
                 collapsedCategories,
+                expiryWarningDays,
               )
             : `<div class="empty-state">${TranslationManager.localize(translations, 'items.no_items', undefined, 'No items in inventory')}</div>`
         }

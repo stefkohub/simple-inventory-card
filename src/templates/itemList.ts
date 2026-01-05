@@ -1,4 +1,4 @@
-import { CSS_CLASSES } from '../utils/constants';
+import { CSS_CLASSES, DEFAULTS } from '../utils/constants';
 import { InventoryItem } from '../types/homeAssistant';
 import { TodoList } from '../types/todoList';
 import { Utilities } from '../utils/utilities';
@@ -13,6 +13,7 @@ export function createItemsList(
   translations: TranslationData,
   showAutoAddInfo: boolean = true,
   collapsedCategories: string[] = [],
+  expiryWarningDays: number = DEFAULTS.EXPIRY_WARNING_DAYS,
 ): string {
   if (items.length === 0) {
     const noItemsMessage = TranslationManager.localize(
@@ -31,14 +32,25 @@ export function createItemsList(
       translations,
       showAutoAddInfo,
       collapsedCategories,
+      expiryWarningDays,
     );
   }
 
   if (sortMethod === 'location') {
-    return createItemsByLocation(items, todoLists, translations, showAutoAddInfo);
+    return createItemsByLocation(
+      items,
+      todoLists,
+      translations,
+      showAutoAddInfo,
+      expiryWarningDays,
+    );
   }
 
-  return items.map((item) => createItemRowTemplate(item, todoLists, translations, showAutoAddInfo)).join('');
+  return items
+    .map((item) =>
+      createItemRowTemplate(item, todoLists, translations, showAutoAddInfo, expiryWarningDays),
+    )
+    .join('');
 }
 
 export function createItemsByCategory(
@@ -47,19 +59,19 @@ export function createItemsByCategory(
   translations: TranslationData,
   showAutoAddInfo: boolean = true,
   collapsedCategories: string[] = [],
+  expiryWarningDays: number = DEFAULTS.EXPIRY_WARNING_DAYS,
 ): string {
   const grouped = Utilities.groupItemsByCategory(items);
   const sortedCategories = Object.keys(grouped).sort();
 
   return sortedCategories
-    .map(
-      (category) => {
-        const isCollapsed = collapsedCategories.includes(category);
-        // Sort items alphabetically within each category
-        const sortedItems = grouped[category].sort((a, b) => a.name.localeCompare(b.name));
-        const itemCount = sortedItems.length;
+    .map((category) => {
+      const isCollapsed = collapsedCategories.includes(category);
+      // Sort items alphabetically within each category
+      const sortedItems = grouped[category].sort((a, b) => a.name.localeCompare(b.name));
+      const itemCount = sortedItems.length;
 
-        return `
+      return `
         <div class="${CSS_CLASSES.CATEGORY_GROUP} ${isCollapsed ? 'is-collapsed' : ''}">
           <div class="${CSS_CLASSES.CATEGORY_HEADER}">
             <button class="category-toggle" data-action="toggle_category" data-category="${category}" title="${TranslationManager.localize(
@@ -73,11 +85,20 @@ export function createItemsByCategory(
             <span class="category-name">${category}</span>
             <span class="category-count">${itemCount}</span>
           </div>
-          ${sortedItems.map((item) => createItemRowTemplate(item, todoLists, translations, showAutoAddInfo)).join('')}
+          ${sortedItems
+            .map((item) =>
+              createItemRowTemplate(
+                item,
+                todoLists,
+                translations,
+                showAutoAddInfo,
+                expiryWarningDays,
+              ),
+            )
+            .join('')}
         </div>
         `;
-      },
-    )
+    })
     .join('');
 }
 
@@ -86,6 +107,7 @@ export function createItemsByLocation(
   todoLists: TodoList[],
   translations: TranslationData,
   showAutoAddInfo: boolean = true,
+  expiryWarningDays: number = DEFAULTS.EXPIRY_WARNING_DAYS,
 ): string {
   const grouped = Utilities.groupItemsByLocation(items);
   const sortedLocations = Object.keys(grouped).sort();
@@ -94,7 +116,17 @@ export function createItemsByLocation(
       (location) => `
         <div class="${CSS_CLASSES.LOCATION_GROUP}">
           <div class="${CSS_CLASSES.LOCATION_HEADER}">${location}</div>
-          ${grouped[location].map((item) => createItemRowTemplate(item, todoLists, translations, showAutoAddInfo)).join('')}
+          ${grouped[location]
+            .map((item) =>
+              createItemRowTemplate(
+                item,
+                todoLists,
+                translations,
+                showAutoAddInfo,
+                expiryWarningDays,
+              ),
+            )
+            .join('')}
         </div>
 `,
     )

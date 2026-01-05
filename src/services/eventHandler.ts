@@ -339,7 +339,7 @@ export class EventHandler {
       console.error(`Error performing ${action} on ${itemName}:`, error);
     } finally {
       setTimeout(() => {
-        button.setAttribute('data-processing', 'true');
+        button.removeAttribute('data-processing');
         button.removeAttribute('disabled');
         button.style.opacity = '1';
         button.style.pointerEvents = 'auto';
@@ -416,7 +416,7 @@ export class EventHandler {
     if (!state?.attributes?.items) return [];
 
     const locations = new Set<string>();
-    Object.values(state.attributes.items).forEach((item: any) => {
+    (state.attributes.items as InventoryItem[]).forEach((item) => {
       if (item.location?.trim()) {
         locations.add(item.location.trim());
       }
@@ -431,7 +431,7 @@ export class EventHandler {
     if (!state?.attributes?.items) return [];
 
     const categories = new Set<string>();
-    Object.values(state.attributes.items).forEach((item: any) => {
+    (state.attributes.items as InventoryItem[]).forEach((item) => {
       if (item.category?.trim()) {
         categories.add(item.category.trim());
       }

@@ -77,6 +77,7 @@ describe('ConfigEditor', () => {
         use_light_edit_modal: false,
         transparent_card: false,
         show_description: true,
+        expiry_warning_days: 7,
         ...inputConfig,
       });
       expect(configEditor['_config']).not.toBe(inputConfig); // Should be a copy
@@ -104,6 +105,7 @@ describe('ConfigEditor', () => {
         use_light_edit_modal: false,
         transparent_card: false,
         show_description: true,
+        expiry_warning_days: 7,
         ...newConfig,
       });
     });

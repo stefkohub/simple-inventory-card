@@ -19,7 +19,6 @@ import { CSSResult, css } from 'lit-element';
   */
 
 export const itemRowStyles: CSSResult = css`
-  
   .item-row {
     display: grid;
     grid-template-columns: minmax(0, 1.6fr) auto auto;
@@ -33,12 +32,14 @@ export const itemRowStyles: CSSResult = css`
     border-radius: 18px;
     background: rgba(15, 15, 15, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.02),
       0 10px 24px rgba(0, 0, 0, 0.35);
   }
 
   .item-row:hover {
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05),
       0 16px 30px rgba(0, 0, 0, 0.45);
     transform: translateY(-1px);
   }
@@ -52,6 +53,14 @@ export const itemRowStyles: CSSResult = css`
   .item-row--low {
     background: linear-gradient(90deg, rgba(49, 33, 18, 0.85), rgba(34, 24, 14, 0.9));
     border-color: rgba(255, 166, 49, 0.2);
+  }
+
+  .item-row--expired {
+    border-color: rgba(255, 107, 95, 0.4);
+  }
+
+  .item-row--expiring {
+    border-color: rgba(255, 178, 74, 0.4);
   }
 
   .item-main {
@@ -155,6 +164,32 @@ export const itemRowStyles: CSSResult = css`
 
   .item-meta-sep {
     opacity: 0.4;
+  }
+
+  .item-expiry-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .item-expiry-icon {
+    font-size: 0.95em;
+    line-height: 1;
+  }
+
+  .item-expiry-text--expired {
+    color: #ff6b5f;
+  }
+
+  .item-expiry-text--expiring-soon,
+  .item-expiry-text--expires-today {
+    color: #ffb24a;
+  }
+
+  .item-expiry-text--expiry-safe {
+    color: rgba(255, 255, 255, 0.55);
   }
 
   .item-info-row {
