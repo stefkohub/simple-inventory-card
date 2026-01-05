@@ -27,7 +27,6 @@ export class Modals {
   private validationManager: ModalValidationManager;
   private uiManager: ModalUIManager;
   private currentEditingItem: string | undefined = undefined;
-  private shadowRoot: ShadowRoot;
 
   constructor(
     shadowRoot: ShadowRoot,
@@ -38,7 +37,6 @@ export class Modals {
     this.formManager = new ModalFormManager(shadowRoot);
     this.validationManager = new ModalValidationManager(shadowRoot);
     this.uiManager = new ModalUIManager(shadowRoot, this.formManager, this.validationManager);
-    this.shadowRoot = shadowRoot;
   }
 
   public openAddModal(

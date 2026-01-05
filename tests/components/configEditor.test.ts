@@ -48,10 +48,7 @@ describe('ConfigEditor', () => {
 
   describe('Construction and Properties', () => {
     it('should initialize with default config', () => {
-      expect(configEditor['_config']).toEqual({
-        entity: '',
-        type: '',
-      });
+      expect(configEditor['_config']).toBeUndefined();
     });
 
     it('should define correct static properties', () => {
@@ -79,6 +76,7 @@ describe('ConfigEditor', () => {
         use_light_add_modal: false,
         use_light_edit_modal: false,
         transparent_card: false,
+        show_description: true,
         ...inputConfig,
       });
       expect(configEditor['_config']).not.toBe(inputConfig); // Should be a copy
@@ -105,6 +103,7 @@ describe('ConfigEditor', () => {
         use_light_add_modal: false,
         use_light_edit_modal: false,
         transparent_card: false,
+        show_description: true,
         ...newConfig,
       });
     });

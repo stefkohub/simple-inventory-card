@@ -221,6 +221,7 @@ describe('EventHandler', () => {
         mockTarget = {
           tagName: 'BUTTON',
           hasAttribute: vi.fn().mockReturnValue(true),
+          closest: vi.fn((selector: string) => (selector === 'button' ? mockTarget : null)),
         } as unknown as HTMLElement;
 
         mockEvent = {
@@ -241,6 +242,7 @@ describe('EventHandler', () => {
         mockTarget = {
           tagName: 'BUTTON',
           hasAttribute: vi.fn().mockReturnValue(false),
+          closest: vi.fn((selector: string) => (selector === 'button' ? mockTarget : null)),
           getAttribute: vi.fn().mockReturnValue('false'),
           setAttribute: vi.fn(),
           removeAttribute: vi.fn(),
@@ -278,6 +280,7 @@ describe('EventHandler', () => {
         mockTarget = {
           tagName: 'DIV',
           hasAttribute: vi.fn().mockReturnValue(false),
+          closest: vi.fn(() => null),
           dataset: {},
         } as unknown as HTMLElement;
 
@@ -302,6 +305,7 @@ describe('EventHandler', () => {
           tagName: 'BUTTON',
           id: ELEMENTS.OPEN_ADD_MODAL,
           hasAttribute: vi.fn().mockReturnValue(false),
+          closest: vi.fn((selector: string) => (selector === 'button' ? mockTarget : null)),
           dataset: {},
         } as unknown as HTMLElement;
 
@@ -324,6 +328,7 @@ describe('EventHandler', () => {
           tagName: 'BUTTON',
           id: ELEMENTS.ADD_ITEM_BTN,
           hasAttribute: vi.fn().mockReturnValue(false),
+          closest: vi.fn((selector: string) => (selector === 'button' ? mockTarget : null)),
           dataset: {},
         } as unknown as HTMLElement;
 
@@ -347,6 +352,7 @@ describe('EventHandler', () => {
           tagName: 'BUTTON',
           id: ELEMENTS.ADVANCED_SEARCH_TOGGLE,
           hasAttribute: vi.fn().mockReturnValue(false),
+          closest: vi.fn((selector: string) => (selector === 'button' ? mockTarget : null)),
           dataset: {},
         } as unknown as HTMLElement;
 
@@ -370,6 +376,7 @@ describe('EventHandler', () => {
           tagName: 'BUTTON',
           id: ELEMENTS.CLEAR_FILTERS,
           hasAttribute: vi.fn().mockReturnValue(false),
+          closest: vi.fn((selector: string) => (selector === 'button' ? mockTarget : null)),
           dataset: {},
         } as unknown as HTMLElement;
 
@@ -399,7 +406,15 @@ describe('EventHandler', () => {
           classList: {
             contains: vi.fn().mockImplementation((className) => className === CSS_CLASSES.SAVE_BTN),
           },
-          closest: vi.fn().mockReturnValue(mockModal),
+          closest: vi.fn((selector: string) => {
+            if (selector === 'button') {
+              return mockTarget;
+            }
+            if (selector === `#${ELEMENTS.EDIT_MODAL}`) {
+              return mockModal;
+            }
+            return null;
+          }),
           hasAttribute: vi.fn().mockReturnValue(false),
           dataset: {},
         } as unknown as HTMLElement;
@@ -430,7 +445,15 @@ describe('EventHandler', () => {
               .fn()
               .mockImplementation((className) => className === CSS_CLASSES.CANCEL_BTN),
           },
-          closest: vi.fn().mockReturnValue(mockModal),
+          closest: vi.fn((selector: string) => {
+            if (selector === 'button') {
+              return mockTarget;
+            }
+            if (selector === `#${ELEMENTS.ADD_MODAL}`) {
+              return mockModal;
+            }
+            return null;
+          }),
           hasAttribute: vi.fn().mockReturnValue(false),
           dataset: {},
         } as unknown as HTMLElement;

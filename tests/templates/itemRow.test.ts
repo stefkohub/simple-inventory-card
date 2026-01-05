@@ -60,8 +60,12 @@ describe('createItemRowTemplate', () => {
       const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
 
       expect(result).toContain('class="item-row');
-      expect(result).toContain('class="item-header"');
-      expect(result).toContain('class="item-footer"');
+      expect(result).toContain('class="item-main"');
+      expect(result).toContain('class="item-name-row"');
+      expect(result).toContain('class="item-subline"');
+      expect(result).toContain('class="item-info-row"');
+      expect(result).toContain('class="item-badges"');
+      expect(result).toContain('class="item-qty');
       expect(result).toContain('class="item-controls"');
       expect(result).toContain('class="item-name"');
     });
@@ -78,28 +82,33 @@ describe('createItemRowTemplate', () => {
       baseItem.category = '';
       const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
 
-      expect(result).toContain('class="location"');
+      expect(result).toContain('class="item-badge item-badge--location"');
       expect(result).toContain('Fridge');
     });
 
     it('should include item category', () => {
       const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
-      expect(result).toContain('class="category"');
+      expect(result).toContain('class="item-meta-tag"');
       expect(result).toContain('Fruit');
     });
 
     it('should include location and category when both are present', () => {
       baseItem.location = 'Fridge';
       const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
-      expect(result).toContain('class="location-category"');
-      expect(result).toContain('Fridge | Fruit');
+      expect(result).toContain('class="item-meta-tag"');
+      expect(result).toContain('class="item-badge item-badge--location"');
+      expect(result).toContain('Fridge');
+      expect(result).toContain('Fruit');
     });
 
     it('should include quantity and unit', () => {
       const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
 
-      expect(result).toContain('class="quantity"');
-      expect(result).toContain('5 pieces');
+      expect(result).toContain('class="item-qty');
+      expect(result).toContain('class="qty-value"');
+      expect(result).toContain('>5<');
+      expect(result).toContain('class="qty-unit"');
+      expect(result).toContain('>pieces<');
     });
 
     it('should include all control buttons', () => {
@@ -157,7 +166,7 @@ describe('createItemRowTemplate', () => {
     it('should display category when present', () => {
       const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
 
-      expect(result).toContain('class="category"');
+      expect(result).toContain('class="item-meta-tag"');
       expect(result).toContain('Fruit');
     });
 
@@ -165,7 +174,7 @@ describe('createItemRowTemplate', () => {
       const noCategoryItem = { ...baseItem, category: '' };
       const result = createItemRowTemplate(noCategoryItem, mockTodoLists, mockTranslations);
 
-      expect(result).not.toContain('class="category"');
+      expect(result).not.toContain('class="item-meta-tag"');
     });
 
     it('should display location when present', () => {
@@ -173,7 +182,7 @@ describe('createItemRowTemplate', () => {
       baseItem.location = 'Fridge';
       const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
 
-      expect(result).toContain('class="location"');
+      expect(result).toContain('class="item-badge item-badge--location"');
       expect(result).toContain('Fridge');
     });
 
@@ -181,13 +190,14 @@ describe('createItemRowTemplate', () => {
       const noLocationItem = { ...baseItem, location: '' };
       const result = createItemRowTemplate(noLocationItem, mockTodoLists, mockTranslations);
 
-      expect(result).not.toContain('class="location"');
+      expect(result).not.toContain('item-badge--location');
     });
 
     it('should display expiry date when present', () => {
-      const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
+      const expiredItem = { ...baseItem, expiry_date: '2000-01-01' };
+      const result = createItemRowTemplate(expiredItem, mockTodoLists, mockTranslations);
 
-      expect(result).toContain('class="expiry expired"');
+      expect(result).toContain('class="item-pill expiry expired"');
       expect(result).toContain('Expired');
       expect(result).toContain('days ago');
     });
@@ -200,7 +210,7 @@ describe('createItemRowTemplate', () => {
       const futureItem = { ...baseItem, expiry_date: futureDateStr };
       const result = createItemRowTemplate(futureItem, mockTodoLists, mockTranslations);
 
-      expect(result).toContain('class="expiry');
+      expect(result).toContain('class="item-pill expiry');
       expect(result).toContain(futureDateStr);
     });
 
@@ -208,21 +218,24 @@ describe('createItemRowTemplate', () => {
       const noExpiryItem = { ...baseItem, expiry_date: '' };
       const result = createItemRowTemplate(noExpiryItem, mockTodoLists, mockTranslations);
 
-      expect(result).not.toContain('class="expiry"');
+      expect(result).not.toContain('class="item-pill expiry"');
     });
 
     it('should display unit when present', () => {
       const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
 
-      expect(result).toContain('5 pieces');
+      expect(result).toContain('class="qty-unit"');
+      expect(result).toContain('>pieces<');
     });
 
     it('should handle missing unit gracefully', () => {
       const noUnitItem = { ...baseItem, unit: '' };
       const result = createItemRowTemplate(noUnitItem, mockTodoLists, mockTranslations);
 
-      expect(result).toContain('class="quantity"');
-      expect(result).toContain('5 ');
+      expect(result).toContain('class="item-qty');
+      expect(result).toContain('class="qty-value"');
+      expect(result).toContain('>5<');
+      expect(result).not.toContain('class="qty-unit"');
     });
   });
 
@@ -230,7 +243,7 @@ describe('createItemRowTemplate', () => {
     it('should not display auto-add info when auto_add_enabled is false', () => {
       const result = createItemRowTemplate(baseItem, mockTodoLists, mockTranslations);
 
-      expect(result).not.toContain('class="auto-add-info"');
+      expect(result).not.toContain('class="item-pill auto-add-info"');
     });
 
     it('should display auto-add info when auto_add_enabled is true', () => {
@@ -242,7 +255,7 @@ describe('createItemRowTemplate', () => {
       };
       const result = createItemRowTemplate(autoAddItem, mockTodoLists, mockTranslations);
 
-      expect(result).toContain('class="auto-add-info"');
+      expect(result).toContain('class="item-pill auto-add-info"');
       expect(result).toContain('Auto-add at ≤ 3 → Grocery List');
     });
 
@@ -315,7 +328,7 @@ describe('createItemRowTemplate', () => {
       expect(result).toContain('class="btn-icon btn-edit"');
       expect(result).toContain('data-action="open_edit"');
       expect(result).toContain('data-name="Apple"');
-      expect(result).toContain('✏️');
+      expect(result).toContain('✎');
     });
 
     it('should include enabled decrement button when quantity > 0', () => {
@@ -369,10 +382,13 @@ describe('createItemRowTemplate', () => {
       const negativeQuantityItem = { ...baseItem, quantity: -5 };
       const result = createItemRowTemplate(negativeQuantityItem, mockTodoLists, mockTranslations);
 
-      expect(result).toContain('class="quantity"');
-      expect(result).toContain('-5 pieces');
+      expect(result).toContain('class="item-qty');
+      expect(result).toContain('class="qty-value"');
+      expect(result).toContain('>-5<');
+      expect(result).toContain('class="qty-unit"');
+      expect(result).toContain('>pieces<');
       expect(result).not.toContain('zero-quantity');
-      expect(result).not.toContain('disabled');
+      expect(result).toContain('data-action="decrement"');
     });
 
     it('should handle items with all optional fields empty', () => {
@@ -393,12 +409,13 @@ describe('createItemRowTemplate', () => {
 
       expect(result).toContain('class="item-name"');
       expect(result).toContain('Minimal Item');
-      expect(result).toContain('class="quantity"');
-      expect(result).toContain('1 ');
-      expect(result).not.toContain('class="category"');
-      expect(result).not.toContain('class="expiry"');
-      expect(result).not.toContain('class="auto-add-info"');
-      expect(result).not.toContain('class="location"');
+      expect(result).toContain('class="item-qty');
+      expect(result).toContain('class="qty-value"');
+      expect(result).toContain('>1<');
+      expect(result).not.toContain('class="item-meta-tag"');
+      expect(result).not.toContain('class="item-pill expiry"');
+      expect(result).not.toContain('class="item-pill auto-add-info"');
+      expect(result).not.toContain('item-badge--location');
     });
 
     it('should handle items with all optional fields populated', () => {
@@ -424,15 +441,22 @@ describe('createItemRowTemplate', () => {
 
       expect(result).toContain('class="item-name"');
       expect(result).toContain('Maximal Item');
-      expect(result).toContain('class="quantity"');
-      expect(result).toContain('10 units');
-      expect(result).toContain('class="expiry');
+      expect(result).toContain('class="item-qty');
+      expect(result).toContain('class="qty-value"');
+      expect(result).toContain('>10<');
+      expect(result).toContain('class="qty-unit"');
+      expect(result).toContain('>units<');
+      expect(result).toContain('class="item-pill expiry');
       expect(result).toContain(futureDateStr);
-      expect(result).toContain('class="auto-add-info"');
+      expect(result).toContain('class="item-pill auto-add-info"');
       expect(result).toContain('Auto-add at ≤ 3 → Grocery List');
       expect(result).toContain('auto-add-enabled');
-      expect(result).toContain('class="location-category"');
-      expect(result).toContain('Pantry | Test Category');
+      expect(result).toContain('class="item-meta-tag"');
+      expect(result).toContain('Test Category');
+      expect(result).toContain('class="item-meta-text"');
+      expect(result).toContain('A fully detailed item');
+      expect(result).toContain('item-badge--location');
+      expect(result).toContain('Pantry');
     });
   });
 

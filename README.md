@@ -16,6 +16,50 @@ You can set an expiration date for an item, how far ahead you want to be warned,
 
 (the description will not sync with the built-in Home Assistant `todo.shopping_list`, but any other list you create will work)
 
+## Fork Enhancements
+
+This fork adds a redesigned layout and several new configuration options:
+
+- Category pills bar with item counts
+- Collapsible category sections (when sorting by category)
+- "Last" low-stock badge and location badges with fixed slots for consistent row height
+- Deterministic location badge colors based on location name
+- Optional compact ("light") add/edit modals with an Advanced collapsible section
+- Optional transparent card background
+- Optional custom title and hideable header/description
+- Improved modal positioning by portaling modals to `document.body`
+
+## Configuration
+
+```yaml
+type: custom:simple-inventory-card
+entity: sensor.my_inventory
+# Optional settings below
+custom_name: Pantry
+show_header: true
+show_description: true
+show_add_button: false
+use_light_add_modal: false
+use_light_edit_modal: false
+transparent_card: false
+show_search: false
+show_sort: false
+show_auto_add_info: false
+```
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `custom_name` | string | `""` | Override the inventory title shown in the card |
+| `show_header` | boolean | `true` | Show the header (title + badges) |
+| `show_description` | boolean | `true` | Show the inventory description under the title |
+| `show_add_button` | boolean | `false` | Show the "Add item" button |
+| `use_light_add_modal` | boolean | `false` | Use compact add modal with Advanced section |
+| `use_light_edit_modal` | boolean | `false` | Use compact edit modal with Advanced section |
+| `transparent_card` | boolean | `false` | Make the card background transparent |
+| `show_search` | boolean | `false` | Show search and filter controls |
+| `show_sort` | boolean | `false` | Show sort controls |
+| `show_auto_add_info` | boolean | `false` | Show the auto-add info pill in rows |
+
 ## Development
 
 This project requires Node.js 20.19.0 or later. Use [nvm](https://github.com/nvm-sh/nvm) to manage Node versions:

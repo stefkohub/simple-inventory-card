@@ -70,10 +70,12 @@ describe('ModalUIManager', () => {
     // Mock shadow root
     mockShadowRoot = {
       getElementById: vi.fn((id: string) => mockElements.get(id) || undefined),
+      querySelector: vi.fn(() => undefined),
     } as unknown as ShadowRoot;
 
     // Mock form manager
     mockFormManager = {
+      clearAddModalForm: vi.fn(),
       populateEditModal: vi.fn(),
     } as unknown as ModalFormManager;
 
@@ -99,6 +101,10 @@ describe('ModalUIManager', () => {
     globalThis.document = {
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
+      getElementById: vi.fn((id: string) => mockElements.get(id) || undefined),
+      body: {
+        appendChild: vi.fn(),
+      },
     } as unknown as Document;
 
     // Mock timers
@@ -124,6 +130,10 @@ describe('ModalUIManager', () => {
         contains: vi.fn(),
       },
       closest: vi.fn(),
+      querySelector: vi.fn(() => null),
+      prepend: vi.fn(),
+      remove: vi.fn(),
+      parentElement: null,
     }) as unknown as HTMLElement;
 
   // Helper function to create mock input element

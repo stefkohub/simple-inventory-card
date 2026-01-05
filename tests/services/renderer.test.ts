@@ -54,14 +54,6 @@ describe('Renderer', () => {
       },
     };
 
-    const mockConfig = {
-      type: 'custom:simple-inventory-card',
-      entity: 'sensor.test_inventory',
-      show_search: true,
-      show_sort: true,
-      show_auto_add_info: true,
-    };
-
     vi.clearAllMocks();
 
     vi.mocked(Utilities.getInventoryName).mockReturnValue('Test Inventory');
@@ -146,6 +138,7 @@ describe('Renderer', () => {
         'Test Description',
         mockTranslations,
         mockConfig,
+        [],
       );
       expect(mockShadowRoot.innerHTML).toBe('<div>Generated Card HTML</div>');
     });
@@ -192,6 +185,7 @@ describe('Renderer', () => {
         'Test Description',
         mockTranslations,
         mockConfig,
+        [],
       );
     });
 
@@ -237,6 +231,7 @@ describe('Renderer', () => {
         'Test Description',
         mockTranslations,
         mockConfig,
+        [],
       );
     });
 
@@ -274,6 +269,7 @@ describe('Renderer', () => {
         'Test Description',
         mockTranslations,
         mockConfig,
+        [],
       );
     });
 
@@ -371,6 +367,7 @@ describe('Renderer', () => {
         'Test Description',
         mockTranslations,
         mockConfig,
+        [],
       );
     });
 
@@ -463,6 +460,7 @@ describe('Renderer', () => {
         'Test Description',
         mockTranslations,
         mockConfig,
+        [],
       );
     });
 
@@ -509,6 +507,7 @@ describe('Renderer', () => {
         'Test Description',
         mockTranslations,
         mockConfig,
+        [],
       );
     });
 
@@ -562,6 +561,7 @@ describe('Renderer', () => {
         'Test Description',
         mockTranslations,
         mockConfig,
+        [],
       );
     });
   });
@@ -663,7 +663,16 @@ describe('Renderer', () => {
         show_auto_add_info: true,
       };
 
-      renderer.renderCard(mockState, 'test.entity', [], mockFilters, 'name', [], mockTranslations, mockConfig);
+      renderer.renderCard(
+        mockState,
+        'test.entity',
+        [],
+        mockFilters,
+        'name',
+        [],
+        mockTranslations,
+        mockConfig,
+      );
 
       expect(generateCardHTML).toHaveBeenCalledWith(
         expect.any(String),
@@ -677,6 +686,7 @@ describe('Renderer', () => {
         expect.any(String),
         expect.any(Object),
         mockConfig,
+        [],
       );
     });
 
@@ -712,7 +722,16 @@ describe('Renderer', () => {
         show_auto_add_info: true,
       };
 
-      renderer.renderCard(mockState, 'test.entity', [], mockFilters, 'name', [], mockTranslations, mockConfig);
+      renderer.renderCard(
+        mockState,
+        'test.entity',
+        [],
+        mockFilters,
+        'name',
+        [],
+        mockTranslations,
+        mockConfig,
+      );
 
       expect(generateCardHTML).toHaveBeenCalledWith(
         expect.any(String),
@@ -726,6 +745,7 @@ describe('Renderer', () => {
         expect.any(String),
         expect.any(Object),
         mockConfig,
+        [],
       );
     });
 
@@ -777,7 +797,16 @@ describe('Renderer', () => {
         show_auto_add_info: true,
       };
 
-      renderer.renderCard(mockState, 'test.entity', [], mockFilters, 'name', [], mockTranslations, mockConfig);
+      renderer.renderCard(
+        mockState,
+        'test.entity',
+        [],
+        mockFilters,
+        'name',
+        [],
+        mockTranslations,
+        mockConfig,
+      );
 
       // Whitespace-only categories should be included since they're truthy
       expect(generateCardHTML).toHaveBeenCalledWith(
@@ -792,6 +821,7 @@ describe('Renderer', () => {
         expect.any(String), // description
         expect.any(Object), // translations
         mockConfig,
+        [],
       );
     });
   });

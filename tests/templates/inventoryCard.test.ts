@@ -16,30 +16,33 @@ vi.mock('../../src/services/translationManager', () => ({
 
 vi.mock('../../src/templates/inventoryHeader', () => ({
   createInventoryHeader: vi.fn(
-    (name, items, _translations, description) =>
-      `<mock-header name="${name}" items="${items.length}" description="${description || ''}" />`,
+    (name, items, _translations, description, showDescription) =>
+      `<mock-header name="${name}" items="${items.length}" description="${description || ''}" showDescription="${showDescription}" />`,
   ),
 }));
 
 vi.mock('../../src/templates/searchAndFilters', () => ({
   createSearchAndFilters: vi.fn(
-    (_, categories, _translations) => `<mock-search-filters categories="${categories.length}" />`,
+    (_filters, categories, locations, _translations) =>
+      `<mock-search-filters categories="${categories.length}" locations="${locations.length}" />`,
   ),
 }));
 
 vi.mock('../../src/templates/modalTemplates', () => ({
   createAddModal: vi.fn(
-    (todoLists, _translations) => `<mock-add-modal todos="${todoLists.length}" />`,
+    (todoLists, _translations, _categories, _locations, variant) =>
+      `<mock-add-modal todos="${todoLists.length}" variant="${variant}" />`,
   ),
   createEditModal: vi.fn(
-    (todoLists, _translations) => `<mock-edit-modal todos="${todoLists.length}" />`,
+    (todoLists, _translations, _categories, _locations, variant) =>
+      `<mock-edit-modal todos="${todoLists.length}" variant="${variant}" />`,
   ),
 }));
 
 vi.mock('../../src/templates/itemList', () => ({
   createItemsList: vi.fn(
-    (items, sortMethod, todoLists, _translations, showAutoAddInfo) =>
-      `<mock-items-list items="${items.length}" sort="${sortMethod}" todos="${todoLists.length}" showAutoAdd="${showAutoAddInfo}" />`,
+    (items, sortMethod, todoLists, _translations, showAutoAddInfo, collapsedCategories) =>
+      `<mock-items-list items="${items.length}" sort="${sortMethod}" todos="${todoLists.length}" showAutoAdd="${showAutoAddInfo}" collapsed="${collapsedCategories.length}" />`,
   ),
 }));
 
@@ -74,6 +77,8 @@ describe('generateCardHTML', () => {
     mockConfig = {
       type: 'custom:simple-inventory-card',
       entity: 'sensor.kitchen_inventory',
+      show_add_button: true,
+      show_description: true,
       show_search: true,
       show_sort: true,
       show_auto_add_info: true,
@@ -162,7 +167,7 @@ describe('generateCardHTML', () => {
       );
 
       expect(result).toContain('<style>mock-styles-content</style>');
-      expect(result).toContain('<ha-card>');
+      expect(result).toContain('<ha-card');
       expect(result).toContain('</ha-card>');
       expect(result).toContain('class="controls-row"');
       expect(result).toContain('class="search-controls"');
@@ -396,7 +401,7 @@ describe('generateCardHTML', () => {
       );
 
       // Check that ha-card wraps everything
-      const haCardStart = result.indexOf('<ha-card>');
+      const haCardStart = result.indexOf('<ha-card');
       const haCardEnd = result.indexOf('</ha-card>');
       expect(haCardStart).toBeGreaterThan(-1);
       expect(haCardEnd).toBeGreaterThan(haCardStart);
@@ -621,6 +626,7 @@ describe('generateCardHTML', () => {
         mockItems,
         mockTranslations,
         'Test description',
+        true,
       );
       expect(searchAndFiltersModule.createSearchAndFilters).toHaveBeenCalledWith(
         mockFilters,

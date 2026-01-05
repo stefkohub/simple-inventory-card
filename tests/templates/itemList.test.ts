@@ -132,10 +132,16 @@ describe('itemList', () => {
           Dairy: [mockItems[2]],
         });
 
-        const result = createItemsList(mockItems, 'category', mockTodoLists, mockTranslations, true);
+        const result = createItemsList(
+          mockItems,
+          'category',
+          mockTodoLists,
+          mockTranslations,
+          true,
+        );
 
         expect(Utilities.groupItemsByCategory).toHaveBeenCalledWith(mockItems);
-        expect(result).toContain('class="category-group"');
+        expect(result).toContain('class="category-group');
         expect(result).toContain('class="category-header"');
       });
 
@@ -157,7 +163,13 @@ describe('itemList', () => {
           Pantry: [mockItems[1]],
         });
 
-        const result = createItemsList(mockItems, 'location', mockTodoLists, mockTranslations, true);
+        const result = createItemsList(
+          mockItems,
+          'location',
+          mockTodoLists,
+          mockTranslations,
+          true,
+        );
 
         expect(Utilities.groupItemsByLocation).toHaveBeenCalledWith(mockItems);
         expect(result).toContain('class="location-group"');
@@ -274,7 +286,13 @@ describe('itemList', () => {
           fruit: [mockItems[0]], // lowercase
         });
 
-        const result = createItemsList(mockItems, 'category', mockTodoLists, mockTranslations, true);
+        const result = createItemsList(
+          mockItems,
+          'category',
+          mockTodoLists,
+          mockTranslations,
+          true,
+        );
 
         expect(result).toContain('fruit'); // Should preserve exact case
       });
@@ -294,14 +312,14 @@ describe('itemList', () => {
         const result = createItemsByCategory(mockItems, mockTodoLists, mockTranslations, true);
 
         expect(Utilities.groupItemsByCategory).toHaveBeenCalledWith(mockItems);
-        expect(result).toContain('class="category-group"');
+        expect(result).toContain('class="category-group');
         expect(result).toContain('class="category-header"');
       });
 
       it('should use CSS_CLASSES constants for styling', () => {
         const result = createItemsByCategory(mockItems, mockTodoLists, mockTranslations, true);
 
-        expect(result).toContain('class="category-group"');
+        expect(result).toContain('class="category-group');
         expect(result).toContain('class="category-header"');
       });
 
@@ -366,7 +384,7 @@ describe('itemList', () => {
       it('should create proper HTML structure for each category', () => {
         const result = createItemsByCategory(mockItems, mockTodoLists, mockTranslations, true);
 
-        expect(result).toMatch(/<div class="category-group">[\s\S]*?<\/div>/g);
+        expect(result).toMatch(/<div class="category-group[^"]*">[\s\S]*?<\/div>/g);
         expect(result).toMatch(/<div class="category-header">[\s\S]*?<\/div>/g);
       });
 
@@ -395,7 +413,7 @@ describe('itemList', () => {
         const result = createItemsByCategory(mockItems, mockTodoLists, mockTranslations, true);
 
         expect(result).toContain('>OnlyCategory<');
-        expect(result.match(/class="category-group"/g)).toHaveLength(1);
+        expect(result.match(/class="category-group/g) || []).toHaveLength(1);
       });
 
       it('should handle empty categories (no items in group)', () => {
@@ -459,7 +477,7 @@ describe('itemList', () => {
     describe('HTML structure validation', () => {
       it('should produce valid nested HTML structure', () => {
         const result = createItemsByCategory(mockItems, mockTodoLists, mockTranslations, true);
-        const categoryGroups = result.match(/<div class="category-group">/g);
+        const categoryGroups = result.match(/<div class="category-group[^"]*">/g);
         const categoryGroupsEnd = result.match(/<\/div>/g);
 
         expect(categoryGroups?.length).toBeGreaterThan(0);
@@ -469,8 +487,8 @@ describe('itemList', () => {
       it('should handle formatted output with newlines', () => {
         const result = createItemsByCategory(mockItems, mockTodoLists, mockTranslations, true);
 
-        expect(result.split('<div class="category-group">').length - 1).toBe(2);
-        expect(result).toContain('class="category-group"');
+        expect(result.split('<div class="category-group').length - 1).toBe(2);
+        expect(result).toContain('class="category-group');
         expect(result).toContain('class="category-header"');
       });
     });
