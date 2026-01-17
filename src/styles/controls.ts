@@ -10,6 +10,13 @@ export const controlStyles: CSSResult = css`
     flex-wrap: wrap;
   }
 
+  .controls-row--search {
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
   .controls-row .sorting-controls {
     flex: 1;
     margin-bottom: 0;
@@ -23,6 +30,19 @@ export const controlStyles: CSSResult = css`
     border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
+  .search-controls--inline {
+    margin-bottom: 0;
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+  }
+
+  .search-controls--full {
+    width: 100%;
+  }
+
   .search-row {
     display: flex;
     gap: 12px;
@@ -33,6 +53,7 @@ export const controlStyles: CSSResult = css`
   .search-row input {
     flex: 1;
     min-width: 0;
+    min-height: 44px;
   }
 
   .search-row input.has-value {

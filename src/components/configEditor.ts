@@ -13,6 +13,7 @@ import {
   createEditModalVariantToggle,
   createTransparentCardToggle,
   createDescriptionToggle,
+  createSearchToggle,
   createExpiryWarningDaysInput,
 } from '../templates/configEditor';
 import { configEditorStyles } from '../styles/configEditor';
@@ -74,6 +75,7 @@ class ConfigEditor extends LitElement {
       transparent_card: false,
       show_description: true,
       expiry_warning_days: DEFAULTS.EXPIRY_WARNING_DAYS,
+      show_search: false,
       ...config,
     };
     if (!nextConfig.type) {
@@ -117,6 +119,10 @@ class ConfigEditor extends LitElement {
 
   get _showDescription(): boolean {
     return this._config?.show_description ?? true;
+  }
+
+  get _showSearch(): boolean {
+    return this._config?.show_search ?? false;
   }
 
   get _expiryWarningDays(): number {
@@ -196,6 +202,7 @@ class ConfigEditor extends LitElement {
           this._descriptionChanged.bind(this),
           this._translations,
         )}
+        ${createSearchToggle(this._showSearch, this._searchChanged.bind(this), this._translations)}
         ${createExpiryWarningDaysInput(
           this._expiryWarningDays,
           this._expiryWarningDaysChanged.bind(this),
@@ -527,6 +534,38 @@ class ConfigEditor extends LitElement {
     const config: InventoryConfig = {
       ...this._config,
       expiry_warning_days: normalizedValue,
+    };
+
+    this._config = config;
+
+    this.requestUpdate();
+
+    this.dispatchEvent(
+      new CustomEvent('config-changed', {
+        detail: { config: config },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
+  private _searchChanged(event_: CustomEvent): void {
+    if (!this._config) {
+      return;
+    }
+
+    const value = this._getCheckedValue(event_);
+    if (value === undefined) {
+      return;
+    }
+
+    if (this._showSearch === value) {
+      return;
+    }
+
+    const config: InventoryConfig = {
+      ...this._config,
+      show_search: value,
     };
 
     this._config = config;

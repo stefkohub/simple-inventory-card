@@ -117,6 +117,8 @@
     "light_edit_modal": "Utiliser le popup léger pour modifier",
     "transparent_card": "Fond de carte transparent",
     "show_description": "Afficher la description de l'inventaire",
+    "show_search": "Afficher la recherche",
+    "expiry_warning_days": "Jours d'alerte d'expiration",
     "custom_name": "Titre personnalisé de l'inventaire"
   },
   "categories": {

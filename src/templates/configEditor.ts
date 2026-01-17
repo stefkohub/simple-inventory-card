@@ -259,6 +259,30 @@ export function createDescriptionToggle(
   `;
 }
 
+export function createSearchToggle(
+  showSearch: boolean,
+  onToggleChanged: (event_: CustomEvent) => void,
+  translations: TranslationData,
+): TemplateResult {
+  return html`
+    <div class="option">
+      <div class="row">
+        <div class="col">
+          <ha-switch .checked=${showSearch} @change=${onToggleChanged}></ha-switch>
+          <label>
+            ${TranslationManager.localize(
+              translations,
+              'config.show_search',
+              undefined,
+              'Show Search',
+            )}
+          </label>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 export function createExpiryWarningDaysInput(
   expiryWarningDays: number,
   onValueChanged: (event_: Event) => void,

@@ -68,6 +68,9 @@ show_auto_add_info: false
 This project requires Node.js 20.19.0 or later. Use [nvm](https://github.com/nvm-sh/nvm) to manage Node versions:
 
 ```bash
+# Use project-local Node via nvm (one-liner)
+export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && nvm use 20.19.0
+
 # Install the required Node version
 nvm install
 

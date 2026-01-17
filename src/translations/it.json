@@ -117,6 +117,8 @@
     "light_edit_modal": "Usa popup leggero per modificare",
     "transparent_card": "Sfondo card trasparente",
     "show_description": "Mostra descrizione inventario",
+    "show_search": "Mostra ricerca",
+    "expiry_warning_days": "Giorni di avviso scadenza",
     "custom_name": "Titolo inventario personalizzato"
   },
   "categories": {

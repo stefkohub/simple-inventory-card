@@ -117,6 +117,8 @@
     "light_edit_modal": "Usar popup ligero para editar",
     "transparent_card": "Fondo de tarjeta transparente",
     "show_description": "Mostrar descripción del inventario",
+    "show_search": "Mostrar búsqueda",
+    "expiry_warning_days": "Días de aviso de caducidad",
     "custom_name": "Título personalizado del inventario"
   },
   "categories": {

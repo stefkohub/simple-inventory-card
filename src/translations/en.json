@@ -117,6 +117,8 @@
     "light_edit_modal": "Use Light Edit Popup",
     "transparent_card": "Transparent Card Background",
     "show_description": "Show Inventory Description",
+    "show_search": "Show Search",
+    "expiry_warning_days": "Expiry warning days",
     "custom_name": "Custom Inventory Title"
   },
   "categories": {

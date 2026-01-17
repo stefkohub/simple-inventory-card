@@ -64,6 +64,15 @@ export const buttonStyles: CSSResult = css`
     font-size: 13px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    min-height: 44px;
+  }
+
+  .add-new-btn--inline {
+    padding: 10px 14px;
+    min-width: 0;
+    white-space: nowrap;
+    align-self: stretch;
+    height: 100%;
   }
 
   .add-new-btn:hover {
@@ -115,13 +124,15 @@ export const buttonStyles: CSSResult = css`
     transition: all 0.2s ease;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.02),
       0 6px 14px rgba(0, 0, 0, 0.3);
   }
 
   .btn-icon:hover {
     transform: translateY(-1px);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05),
       0 10px 20px rgba(0, 0, 0, 0.4);
   }
 
@@ -200,6 +211,9 @@ export const buttonStyles: CSSResult = css`
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s ease;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
 
   .toggle-btn:hover {

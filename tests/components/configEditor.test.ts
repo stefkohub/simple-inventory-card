@@ -78,6 +78,7 @@ describe('ConfigEditor', () => {
         transparent_card: false,
         show_description: true,
         expiry_warning_days: 7,
+        show_search: false,
         ...inputConfig,
       });
       expect(configEditor['_config']).not.toBe(inputConfig); // Should be a copy
@@ -106,6 +107,7 @@ describe('ConfigEditor', () => {
         transparent_card: false,
         show_description: true,
         expiry_warning_days: 7,
+        show_search: false,
         ...newConfig,
       });
     });

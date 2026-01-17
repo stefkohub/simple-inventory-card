@@ -95,9 +95,9 @@ export const itemRowStyles: CSSResult = css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 2px 8px;
+    padding: 4px 10px;
     border-radius: 999px;
-    font-size: 0.62em;
+    font-size: 0.72em;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -106,10 +106,10 @@ export const itemRowStyles: CSSResult = css`
     border: 1px solid rgba(255, 166, 49, 0.35);
     white-space: nowrap;
     line-height: 1;
-    height: 18px;
-    min-width: 52px;
+    height: 22px;
+    min-width: 68px;
     align-self: center;
-    width: 80px;
+    width: 92px;
   }
 
   .item-badges {
@@ -124,22 +124,22 @@ export const itemRowStyles: CSSResult = css`
   }
 
   .item-badge-slot {
-    min-height: 18px;
+    min-height: 22px;
     display: flex;
     align-items: center;
-    width: 80px;
+    width: 92px;
     justify-content: flex-end;
   }
 
   .item-badge--location {
     min-width: 0;
-    padding: 2px 8px;
+    padding: 4px 10px;
     background: var(--location-bg, rgba(60, 176, 255, 0.15));
     color: var(--location-color, #6cc0ff);
     border: 1px solid var(--location-border, rgba(60, 176, 255, 0.35));
-    text-transform: none;
-    letter-spacing: 0.02em;
-    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75em;
   }
 
   .item-subline {
@@ -203,11 +203,61 @@ export const itemRowStyles: CSSResult = css`
   }
 
   .item-pill {
-    padding: 2px 8px;
+    padding: 3px 9px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.08);
     font-weight: 600;
+  }
+
+  @media (max-width: 640px) {
+    .item-badge {
+      padding: 5px 12px;
+      font-size: 0.78em;
+      height: 24px;
+      min-width: 74px;
+      width: 98px;
+    }
+
+    .item-badge-slot {
+      min-height: 24px;
+      width: 98px;
+    }
+
+    .item-badge--location {
+      padding: 5px 12px;
+      font-size: 0.8em;
+    }
+
+    .item-pill {
+      padding: 4px 10px;
+      font-size: 0.9em;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .item-badge {
+      padding: 5px 11px;
+      font-size: 0.76em;
+      height: 23px;
+      min-width: 72px;
+      width: 96px;
+    }
+
+    .item-badge-slot {
+      min-height: 23px;
+      width: 96px;
+    }
+
+    .item-badge--location {
+      padding: 5px 11px;
+      font-size: 0.78em;
+    }
+
+    .item-pill {
+      padding: 4px 10px;
+      font-size: 0.88em;
+    }
   }
 
   .item-controls {

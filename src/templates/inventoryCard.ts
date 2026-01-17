@@ -34,6 +34,16 @@ export function generateCardHTML(
   const expiryWarningDays = config.expiry_warning_days ?? DEFAULTS.EXPIRY_WARNING_DAYS;
   const addModalVariant = config.use_light_add_modal ? 'light' : 'default';
   const editModalVariant = config.use_light_edit_modal ? 'light' : 'default';
+  const addButtonHtml = showAddButton
+    ? `<button id="${ELEMENTS.OPEN_ADD_MODAL}" class="add-new-btn">
+        + ${TranslationManager.localize(translations, 'modal.add_item', undefined, 'Add Item')}
+      </button>`
+    : '';
+  const addButtonInlineHtml = showAddButton
+    ? `<button id="${ELEMENTS.OPEN_ADD_MODAL}" class="add-new-btn add-new-btn--inline">
+        + ${TranslationManager.localize(translations, 'modal.add_item', undefined, 'Add Item')}
+      </button>`
+    : '';
   const categoryCounts = allItems.reduce<Record<string, number>>((counts, item) => {
     const category = item.category?.trim() || 'Uncategorized';
     counts[category] = (counts[category] || 0) + 1;
@@ -86,36 +96,31 @@ export function generateCardHTML(
         <div class="sorting-controls">
           ${createSortOptions(sortMethod, translations)}
         </div>
-        ${
-          showAddButton
-            ? `<button id="${ELEMENTS.OPEN_ADD_MODAL}" class="add-new-btn">
-                + ${TranslationManager.localize(translations, 'modal.add_item', undefined, 'Add Item')}
-              </button>`
-            : ''
-        }
+        ${showAddButton && !showSearch ? addButtonHtml : ''}
       </div>
       `
-          : `
-      <div class="controls-row">
-        ${
-          showAddButton
-            ? `<button id="${ELEMENTS.OPEN_ADD_MODAL}" class="add-new-btn add-new-btn-full">
-                + ${TranslationManager.localize(translations, 'modal.add_item', undefined, 'Add Item')}
-              </button>`
-            : ''
-        }
-      </div>
-      `
+          : ''
       }
 
       ${
         showSearch
           ? `
-      <div class="search-controls">
-        ${createSearchAndFilters(filters, categories, locations, translations)}
+      <div class="controls-row controls-row--search">
+        ${showAddButton ? addButtonInlineHtml : ''}
+        <div class="search-controls search-controls--inline ${showAddButton ? '' : 'search-controls--full'}">
+          ${createSearchAndFilters(filters, categories, locations, translations)}
+        </div>
       </div>
       `
-          : ''
+          : showAddButton
+            ? `
+      <div class="controls-row">
+        <button id="${ELEMENTS.OPEN_ADD_MODAL}" class="add-new-btn add-new-btn-full">
+          + ${TranslationManager.localize(translations, 'modal.add_item', undefined, 'Add Item')}
+        </button>
+      </div>
+      `
+            : ''
       }
 
       ${createActiveFiltersDisplay(filters, translations)}
